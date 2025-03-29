@@ -5,8 +5,6 @@ const app = express();
 const port = 3000;
 
 const {
-    addUser,
-    resetUser,
     addBet,
     addContract,
     matchOrders,
@@ -14,6 +12,12 @@ const {
     saveData,
     loadData,
 } = require('./yesno_contracts');
+
+const {
+    addUser,
+    enrichenUser,
+    users
+} = require('./users');
 
 // Set EJS as the view engine
 app.set('view engine', 'ejs');

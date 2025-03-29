@@ -94,8 +94,9 @@
             margin: 2rem auto;
             padding: 0 1.5rem;
             display: grid;
-            grid-template-columns: 2fr 1fr;
             gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive equal columns */
+            align-items: start; /* Align cards at the top */
         }
 
         .market-card {
@@ -108,6 +109,10 @@
             border-left: 4px solid var(--primary);
             position: relative;
             overflow: hidden;
+            justify-content: space-between; /* Consistent content distribution */
+            min-height: 300px; /* Set minimum card height */
+
+
         }
 
         .market-card::after {
@@ -120,6 +125,14 @@
             background: rgba(46, 139, 87, 0.1);
             border-radius: 0 0 0 100%;
         }
+
+        /* Add these new rules */
+        .left-column, .right-column {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            align-content: start;
+}
 
         .market-title {
             font-size: 1.2rem;
@@ -146,9 +159,16 @@
         .outcomes {
             display: grid;
             grid-template-columns: 1fr 1fr;
+            grid-auto-rows: 1fr; /* Equal height outcomes */
             gap: 1rem;
             margin-top: 1rem;
         }
+
+        .market-meta {
+             min-height: 40px; /* Consistent meta section height */
+
+        
+}
 
         .outcome {
             padding: 1rem;
@@ -329,27 +349,435 @@
                     Source: UNEP Progress Report
                 </div>
             </div>
-
-            <!-- Add remaining 19 cards following the same structure -->
             
             <!-- Example Card 2 -->
             <div class="market-card" data-category="policy">
                 <h2 class="market-title">US Offshore Drilling Ban by Dec 2025?</h2>
                 <div class="market-meta">
-                    <span class="market-type">National Policy</span>
+                    <span class="market-type">Policy</span>
                     <span><i class="far fa-clock"></i> Resolves: Dec 2025</span>
                 </div>
                 <div class="outcomes">
-                    <!-- YES/NO outcomes -->
+                    <div class="outcome yes">
+                        <div class="outcome-header">
+                            <span class="outcome-label">YES</span>
+                            <span class="probability">78%</span>
+                        </div>
+                        <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                        <button class="bet-btn">Buy YES $0.78</button>
+                    </div>
+                    <div class="outcome no">
+                        <div class="outcome-header">
+                            <span class="outcome-label">NO</span>
+                            <span class="probability">22%</span>
+                        </div>
+                        <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                        <button class="bet-btn">Buy NO $0.22</button>
+                    </div>
                 </div>
-                <div class="verification">
+                <div class="verification" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
                     Source: U.S. Congress Bills Database
                 </div>
             </div>
 
         </div>
+            <!-- Example Card 3 -->
 
-        <!-- Right Column -->
+        <div class="market-card" data-category="technology">
+            <h2 class="market-title">Will hydrogen fuel cell vehicles surpass 1M global sales by June 2025?</h2>
+            <div class="market-meta">
+                <span class="market-type">Technology Adoption</span>
+                <span><i class="far fa-clock"></i> Resolves: June 2025</span>   
+            </div>
+            <div class="outcomes">
+                <div class="outcome yes">
+                    <div class="outcome-header">
+                        <span class="outcome-label">YES</span>
+                        <span class="probability">78%</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                    <button class="bet-btn">Buy YES $0.78</button>
+                </div>
+                <div class="outcome no">
+                    <div class="outcome-header">
+                        <span class="outcome-label">NO</span>
+                        <span class="probability">22%</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                    <button class="bet-btn">Buy NO $0.22</button>
+                </div>
+            </div>
+            <div class="verification" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
+                Source: UNEP Progress Report
+            </div>
+        </div>
+
+                    <!-- Example Card 4 -->
+
+        <div class="market-card" data-category="environment">
+            <h2 class="market-title">Will Arctic summer sea ice extent drop below 3M km² in September 2025?</h2>
+            <div class="market-meta">
+                <span class="market-type">Environment</span>
+                <span><i class="far fa-clock"></i> Resolves: Sept 2025</span>
+            </div>
+            <div class="outcomes">
+                <div class="outcome yes">
+                    <div class="outcome-header">
+                        <span class="outcome-label">YES</span>
+                        <span class="probability">78%</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                    <button class="bet-btn">Buy YES $0.78</button>
+                </div>
+                <div class="outcome no">
+                    <div class="outcome-header">
+                        <span class="outcome-label">NO</span>
+                        <span class="probability">22%</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                    <button class="bet-btn">Buy NO $0.22</button>
+                </div>
+            </div>
+            <div class="verification" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
+                Source: NSIDC Satellite Data
+            </div>
+        </div>
+                    <!-- Example Card 5 -->
+
+        <div class="market-card" data-category="agreements">
+            <h2 class="market-title">Will the COP30 agreement include binding targets for fossil fuel phaseouts?</h2>
+            <div class="market-meta">
+                <span class="market-type">International Agreement</span>
+                <span><i class="far fa-clock"></i> Resolves: Nov 2025</span>
+            </div>
+            <div class="outcomes">
+                <div class="outcome yes">
+                    <div class="outcome-header">
+                        <span class="outcome-label">YES</span>
+                        <span class="probability">78%</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                    <button class="bet-btn">Buy YES $0.78</button>
+                </div>
+                <div class="outcome no">
+                    <div class="outcome-header">
+                        <span class="outcome-label">NO</span>
+                        <span class="probability">22%</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                    <button class="bet-btn">Buy NO $0.22</button>
+                </div>
+            </div>
+            <div class="verification" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
+                Source: COP30 Final Text
+            </div>
+        </div>
+
+                    <!-- Example Card 6 -->
+
+        <div class="market-card" data-category="technology">
+            <h2 class="market-title">Will India's renewable energy capacity surpass 200 GW by June 2025? </h2>
+            <div class="market-meta">
+                <span class="market-type">Technology</span>
+                <span><i class="far fa-clock"></i> Resolves: June 2025</span>
+            </div>
+            <div class="outcomes">
+                <div class="outcome yes">
+                    <div class="outcome-header">
+                        <span class="outcome-label">YES</span>
+                        <span class="probability">78%</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                    <button class="bet-btn">Buy YES $0.78</button>
+                </div>
+                <div class="outcome no">
+                    <div class="outcome-header">
+                        <span class="outcome-label">NO</span>
+                        <span class="probability">22%</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                    <button class="bet-btn">Buy NO $0.22</button>
+                </div>
+            </div>
+            <div class="verification" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
+                Source: Indian Ministry of Power
+            </div>
+        </div>
+
+
+        <div class="market-card" data-category="corporate">
+            <h2 class="market-title">Will Amazon achieve between 90 to 100% renewable energy for operations by June 2025??</h2>
+            <div class="market-meta">
+                <span class="market-type">Corporate Action</span>
+                <span><i class="far fa-clock"></i> Resolves: June 2025</span>
+            </div>
+            <div class="outcomes">
+                <div class="outcome yes">
+                    <div class="outcome-header">
+                        <span class="outcome-label">YES</span>
+                        <span class="probability">78%</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                    <button class="bet-btn">Buy YES $0.78</button>
+                </div>
+                <div class="outcome no">
+                    <div class="outcome-header">
+                        <span class="outcome-label">NO</span>
+                        <span class="probability">22%</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                    <button class="bet-btn">Buy NO $0.22</button>
+                </div>
+            </div>
+            <div class="verification" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
+                Source: Amazon Sustainability Report
+            </div>
+        </div>
+
+
+        <div class="market-card" data-category="corporate">
+            <h2 class="market-title">Will ExxonMobil reduce Scope 3 emissions by 15% by Dec 2025?</h2>
+            <div class="market-meta">
+                <span class="market-type">Corporate Action</span>
+                <span><i class="far fa-clock"></i> Resolves: Dec 2025</span>
+            </div>
+            <div class="outcomes">
+                <div class="outcome yes">
+                    <div class="outcome-header">
+                        <span class="outcome-label">YES</span>
+                        <span class="probability">78%</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                    <button class="bet-btn">Buy YES $0.78</button>
+                </div>
+                <div class="outcome no">
+                    <div class="outcome-header">
+                        <span class="outcome-label">NO</span>
+                        <span class="probability">22%</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                    <button class="bet-btn">Buy NO $0.22</button>
+                </div>
+            </div>
+            <div class="verification" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
+                Source: ExxonMobil ESG Report
+            </div>
+        </div>
+
+        <div class="market-card" data-category="environment">
+            <h2 class="market-title">Will 2025 surpass 2024 as the hottest year on record? </h2>
+            <div class="market-meta">
+                <span class="market-type">Environmental Metrics</span>
+                <span><i class="far fa-clock"></i> Resolves: Jan 2026</span>
+            </div>
+            <div class="outcomes">
+                <div class="outcome yes">
+                    <div class="outcome-header">
+                        <span class="outcome-label">YES</span>
+                        <span class="probability">92%</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                    <button class="bet-btn">Buy YES $0.92</button>
+                </div>
+                <div class="outcome no">
+                    <div class="outcome-header">
+                        <span class="outcome-label">NO</span>
+                        <span class="probability">8%</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                    <button class="bet-btn">Buy NO $0.08</button>
+                </div>
+            </div>
+            <div class="verification" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
+                Source: NASA/NOAA Annual Report
+            </div>
+        </div>
+
+
+       
+        <div class="market-card" data-category="policy">
+            <h2 class="market-title">Will California Carbon Allowance prices average >$40/ton in 2025?</h2>
+            <div class="market-meta">
+                <span class="market-type">Policy</span>
+                <span><i class="far fa-clock"></i> Resolves: Jan 2026/span>
+            </div>
+            <div class="outcomes">
+                <div class="outcome yes">
+                    <div class="outcome-header">
+                        <span class="outcome-label">YES</span>
+                        <span class="probability">12%</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                    <button class="bet-btn">Buy YES $0.12</button>
+                </div>
+                <div class="outcome no">
+                    <div class="outcome-header">
+                        <span class="outcome-label">NO</span>
+                        <span class="probability">88%</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                    <button class="bet-btn">Buy NO $0.88</button>
+                </div>
+            </div>
+            <div class="verification" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
+                Source: ICE Futures Data
+            </div>
+        </div>
+
+
+        <div class="market-card" data-category="environment">
+            <h2 class="market-title">Will >30% of global coral reefs experience severe bleaching in 2025?</h2>
+            <div class="market-meta">
+                <span class="market-type">Ecological</span>
+                <span><i class="far fa-clock"></i> Resolves: Sept 2025</span>
+            </div>
+            <div class="outcomes">
+                <div class="outcome yes">
+                    <div class="outcome-header">
+                        <span class="outcome-label">YES</span>
+                        <span class="probability">67%</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                    <button class="bet-btn">Buy YES $0.67</button>
+                </div>
+                <div class="outcome no">
+                    <div class="outcome-header">
+                        <span class="outcome-label">NO</span>
+                        <span class="probability">33%</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                    <button class="bet-btn">Buy NO $0.33</button>
+                </div>
+            </div>
+            <div class="verification" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
+                Source: NOAA Coral Reef Watch
+            </div>
+        </div>
+
+
+        <div class="market-card" data-category="financial">
+            <h2 class="market-title">Will climate-tech VC investments exceed $100B in 2025?</h2>
+            <div class="market-meta">
+                <span class="market-type">Financial</span>
+                <span><i class="far fa-clock"></i> Resolves: Jan 2026</span>
+            </div>
+            <div class="outcomes">
+                <div class="outcome yes">
+                    <div class="outcome-header">
+                        <span class="outcome-label">YES</span>
+                        <span class="probability">91%</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                    <button class="bet-btn">Buy YES $0.91</button>
+                </div>
+                <div class="outcome no">
+                    <div class="outcome-header">
+                        <span class="outcome-label">NO</span>
+                        <span class="probability">9%</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                    <button class="bet-btn">Buy NO $0.09</button>
+                </div>
+            </div>
+            <div class="verification" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
+                Source: Pitchbook/Dealroom
+            </div>
+        </div>
+
+
+        <div class="market-card" data-category="environment">
+            <h2 class="market-title">Will deforestation in the Congo Basin exceed 20,000 km² in 2025?</h2>
+            <div class="market-meta">
+                <span class="market-type">Ecological</span>
+                <span><i class="far fa-clock"></i> Resolves: Jan 2026</span>
+            </div>
+            <div class="outcomes">
+                <div class="outcome yes">
+                    <div class="outcome-header">
+                        <span class="outcome-label">YES</span>
+                        <span class="probability">98%</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                    <button class="bet-btn">Buy YES $0.98</button>
+                </div>
+                <div class="outcome no">
+                    <div class="outcome-header">
+                        <span class="outcome-label">NO</span>
+                        <span class="probability">2%</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                    <button class="bet-btn">Buy NO $0.02</button>
+                </div>
+            </div>
+            <div class="verification" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
+                Source: Global Forest Watch
+            </div>
+        </div>
+
+
+        <div class="market-card" data-category="environment">
+            <h2 class="market-title">Will Australia experience >50 "catastrophic" fire danger days in 2025?</h2>
+            <div class="market-meta">
+                <span class="market-type">Extreme Weather</span>
+                <span><i class="far fa-clock"></i> Resolves: Dec 2025</span>
+            </div>
+            <div class="outcomes">
+                <div class="outcome yes">
+                    <div class="outcome-header">
+                        <span class="outcome-label">YES</span>
+                        <span class="probability">10%</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                    <button class="bet-btn">Buy YES $0.10</button>
+                </div>
+                <div class="outcome no">
+                    <div class="outcome-header">
+                        <span class="outcome-label">NO</span>
+                        <span class="probability">90%</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                    <button class="bet-btn">Buy NO $0.90</button>
+                </div>
+            </div>
+            <div class="verification" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
+                Source: Australian Burueau of Meteorology 
+            </div>
+        </div>
+
+
+        <div class="market-card" data-category="environment">
+            <h2 class="market-title">Will the 2025 Atlantic hurricane season produce >20 named storms?</h2>
+            <div class="market-meta">
+                <span class="market-type">Extreme Weather</span>
+                <span><i class="far fa-clock"></i> Resolves: Nov 2025</span>
+            </div>
+            <div class="outcomes">
+                <div class="outcome yes">
+                    <div class="outcome-header">
+                        <span class="outcome-label">YES</span>
+                        <span class="probability">78%</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                    <button class="bet-btn">Buy YES $0.78</button>
+                </div>
+                <div class="outcome no">
+                    <div class="outcome-header">
+                        <span class="outcome-label">NO</span>
+                        <span class="probability">22%</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                    <button class="bet-btn">Buy NO $0.22</button>
+                </div>
+            </div>
+            <div class="verification" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
+                Source: NOAA Seasonal Outlook
+            </div>
+        </div>
+
+
+        <!-- 
+        
+        Right Column 
         <div class="right-column">
             <div class="news-container">
                 <h3 style="margin-top: 0;"><i class="fas fa-newspaper"></i> Climate News</h3>
@@ -358,10 +786,10 @@
                     <div class="news-title">Global Carbon Prices Reach Record High</div>
                     <div class="news-date">Mar 29, 2025</div>
                 </div>
-                <!-- Add more news items -->
+                <!-- Add more news items --> 
             </div>
         </div>
-    </div>
+    </div>  --> 
 
     <script>
         // Filter Functionality

@@ -2,21 +2,23 @@ const fs = require('fs');
 const path = require('path');
 const { Heap } = require('heap-js');
 
+const {
+    addUser,
+    enrichenUser,
+    users,
+    saveData: saveUserData,
+    loadData: loadUserData,
+} = require('./users');
+
 // In-memory storage for users and bets
-let users = {};  // Key: userId, Value: { balance, contracts }
 let bets = {};   // Key: betId, Value: { yesOrders: MinHeap, noOrders: MaxHeap, contracts: [] }
 
 // Path to save users and bets to a file
-const usersFilePath = path.join(__dirname, 'yesno_users.json');
 const betsFilePath = path.join(__dirname, 'yesno_bets.json');
 
 // Function to load users and bets from files if they exist
 function loadData() {
     try {
-        if (fs.existsSync(usersFilePath)) {
-            const data = fs.readFileSync(usersFilePath, 'utf8');
-            users = JSON.parse(data);
-        }
         if (fs.existsSync(betsFilePath)) {
             const data = fs.readFileSync(betsFilePath, 'utf8');
             bets = JSON.parse(data);
@@ -29,29 +31,12 @@ function loadData() {
 // Function to save users and bets to files
 function saveData() {
     try {
-        fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2), 'utf8');
         fs.writeFileSync(betsFilePath, JSON.stringify(bets, null, 2), 'utf8');
-        console.log('Users and Bets data saved to file');
+        console.log('Bets data saved to file');
     } catch (err) {
         console.error('Error saving data to file:', err);
     }
-}
-
-// Add a user to the system
-function addUser(userId, initialBalance = 1000) {
-    if (!users[userId]) {
-        users[userId] = {
-            balance: initialBalance,
-            bids: [], // stores current bids
-            boughtContracts: [],  // Stores contracts bought by this user
-        };
-        saveData();
-    }
-}
-
-function enrichenUser(userId, addAmount = 1000) {
-    users[userId].balance += addAmount
-    saveData();
+    saveUserData()
 }
 
 // Add a new bet
@@ -115,8 +100,8 @@ function addContract(userId, betId, price, yesNo) {
         bet.noOrders.push(contract);   // Add to no queue
     }
 
-    // don't update contracts yet here because that only stores bets that
-    // have already been made
+    // match orders if possible
+    matchOrders(betId)
 
     // Save data
     saveData();
@@ -198,8 +183,6 @@ function getLineChart(betId) {
 loadData();
 
 module.exports = {
-    addUser,
-    enrichenUser,
     addBet,
     addContract,
     matchOrders,
