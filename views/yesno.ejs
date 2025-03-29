@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambitus| Climate Markets</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2e8b57;
+            --secondary: #2196F3;
+            --accent: #4CAF50;
+            --dark: #1B5E20;
+            --light: #E8F5E9;
+            --success: #4CAF50;
+            --danger: #F44336;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background: var(--gradient);
+            color: #2d3436;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            border-bottom-color: white;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .connect-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .connect-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .market-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .market-card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            background: rgba(46, 139, 87, 0.1);
+            border-radius: 0 0 0 100%;
+        }
+
+        .market-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .market-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .market-type {
+            background: rgba(46, 139, 87, 0.1);
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .outcomes {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .outcome {
+            padding: 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .outcome.yes {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(255, 255, 255, 0.3) 100%);
+            border: 1px solid var(--success);
+        }
+
+        .outcome.no {
+            background: linear-gradient(135deg, rgba(244, 67, 54, 0.1) 0%, rgba(255, 255, 255, 0.3) 100%);
+            border: 1px solid var(--danger);
+        }
+
+        .outcome-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .outcome-label {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .probability {
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .bet-input {
+            width: 100%;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .bet-btn {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .yes .bet-btn {
+            background: var(--success);
+            color: white;
+        }
+
+        .no .bet-btn {
+            background: var(--danger);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+
+        /* Filter Styles */
+        .category-filters {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: var(--success);
+            border-color: var(--success);
+        }
+
+        /* News Sidebar */
+        .news-container {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 100px;
+        }
+
+        @keyframes ripple {
+            to { transform: scale(4); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-seedling"></i>
+            Ambitus
+        </div>
+        <div class="nav-links">
+            <a href="#">Markets</a>
+            <a href="#">Portfolio</a>
+            <a href="#">Impact</a>
+            <a href="#">News</a>
+        </div>
+        <div class="user-actions">
+            <button class="connect-btn">
+                <i class="fas fa-wallet"></i> Connect Wallet
+            </button>
+        </div>
+    </nav>
+
+    <!-- Category Filters -->
+    <div class="category-filters">
+        <button class="filter-btn active" data-category="all">All</button>
+        <button class="filter-btn" data-category="agreements">Agreements</button>
+        <button class="filter-btn" data-category="policy">Policy</button>
+        <button class="filter-btn" data-category="corporate">Corporate</button>
+        <button class="filter-btn" data-category="environment">Environment</button>
+        <button class="filter-btn" data-category="technology">Tech</button>
+        <button class="filter-btn" data-category="financial">Financial</button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Left Column -->
+        <div class="left-column">
+            <!-- All 20 Market Cards -->
+            <!-- Example Card 1 -->
+            <div class="market-card" data-category="agreements">
+                <h2 class="market-title">Global Methane Pledge: 30% Reduction by Sept 2025?</h2>
+                <div class="market-meta">
+                    <span class="market-type">International Agreement</span>
+                    <span><i class="far fa-clock"></i> Resolves: Sept 2025</span>
+                </div>
+                <div class="outcomes">
+                    <div class="outcome yes">
+                        <div class="outcome-header">
+                            <span class="outcome-label">YES</span>
+                            <span class="probability">78%</span>
+                        </div>
+                        <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                        <button class="bet-btn">Buy YES $0.78</button>
+                    </div>
+                    <div class="outcome no">
+                        <div class="outcome-header">
+                            <span class="outcome-label">NO</span>
+                            <span class="probability">22%</span>
+                        </div>
+                        <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                        <button class="bet-btn">Buy NO $0.22</button>
+                    </div>
+                </div>
+                <div class="verification" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
+                    Source: UNEP Progress Report
+                </div>
+            </div>
+
+            <!-- Add remaining 19 cards following the same structure -->
+            
+            <!-- Example Card 2 -->
+            <div class="market-card" data-category="policy">
+                <h2 class="market-title">US Offshore Drilling Ban by Dec 2025?</h2>
+                <div class="market-meta">
+                    <span class="market-type">National Policy</span>
+                    <span><i class="far fa-clock"></i> Resolves: Dec 2025</span>
+                </div>
+                <div class="outcomes">
+                    <!-- YES/NO outcomes -->
+                </div>
+                <div class="verification">
+                    Source: U.S. Congress Bills Database
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Column -->
+        <div class="right-column">
+            <div class="news-container">
+                <h3 style="margin-top: 0;"><i class="fas fa-newspaper"></i> Climate News</h3>
+                <div class="news-item">
+                    <div class="news-source">Climate Watch</div>
+                    <div class="news-title">Global Carbon Prices Reach Record High</div>
+                    <div class="news-date">Mar 29, 2025</div>
+                </div>
+                <!-- Add more news items -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Filter Functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const category = this.dataset.category;
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                document.querySelectorAll('.market-card').forEach(card => {
+                    card.style.display = category === 'all' || card.dataset.category === category ? 'block' : 'none';
+                });
+            });
+        });
+
+        // Ripple Effect
+        document.querySelectorAll('.bet-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const ripple = document.createElement('div');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                
+                ripple.style.width = ripple.style.height = `${size}px`;
+                ripple.style.left = `${e.clientX - rect.left - size/2}px`;
+                ripple.style.top = `${e.clientY - rect.top - size/2}px`;
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255,255,255,0.4)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 600ms linear';
+
+                this.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        // Connect Wallet Interaction
+        document.querySelector('.connect-btn').addEventListener('click', () => {
+            alert('Connecting to sustainable wallet...\nTransactions offset 200% carbon footprint');
+        });
+    </script>
+</body>
+</html>

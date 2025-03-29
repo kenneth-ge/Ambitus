@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        :root {
+            --primary: #2e8b57;  /* Sea green */
+            --secondary: #3a86ff; /* Azure */
+            --accent: #8338ec;   /* Purple */
+            --dark: #1a3a3f;     /* Dark teal */
+            --light: #f0f7f4;    /* Light mint */
+            --success: #4cc9a7;  /* Teal */
+            --danger: #ff6b6b;   /* Coral */
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Open Sans', system-ui, sans-serif;
+            background: linear-gradient(135deg, var(--light) 0%, var(--success) 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: var(--dark);
+        }
+
+        .login-container {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            width: 350px;
+            transition: transform 0.3s ease;
+        }
+
+        .login-container:hover {
+            transform: scale(1.02);
+        }
+
+        h2 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 1rem;
+            border: 2px solid var(--success);
+            border-radius: 8px;
+            font-size: 16px;
+            background: var(--light);
+            color: var(--dark);
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--primary);
+        }
+
+        button {
+            width: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--success) 100%);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(90deg, var(--success) 0%, var(--primary) 100%);
+        }
+
+        .error-message {
+            color: var(--danger);
+            margin-top: 10px;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 15px;
+            color: var(--secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            <button type="submit">Login</button>
+        </form>
+        <p id="errorMessage" class="error-message"></p>
+        <a href="/" class="back-link">Back to Home</a>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+
+            if (response.ok) {
+                window.location.href = '/'; // Redirect to root page
+            } else {
+                const data = await response.json();
+                document.getElementById('errorMessage').innerText = data.message;
+            }
+        });
+    </script>
+</body>
+</html>

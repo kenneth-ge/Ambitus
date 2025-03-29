@@ -1,0 +1,570 @@
+<! -- MAIN page, first sight user lands on -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambitus | Sustainable Markets</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2e8b57;  /* Sea green */
+            --secondary: #3a86ff; /* Azure */predict
+            --accent: #8338ec;   /* Purple */
+            --dark: #1a3a3f;     /* Dark teal */
+            --light: #f0f7f4;    /* Light mint */
+            --success: #4cc9a7;  /* Teal */
+            --danger: #ff6b6b;   /* Coral */
+            --card-bg: #ffffff;
+            --chart-bg: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Open Sans', system-ui, sans-serif;
+            margin: 0;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        /* Nature-inspired Navigation */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-weight: 800;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--light);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            border-bottom-color: white;
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        .carbon-footprint {
+            background-color: rgba(255,255,255,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .connect-btn {
+            background-color: white;
+            color: var(--primary);
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .connect-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        /* Leaf-inspired layout */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+        
+        /* Eco-market cards */
+        .market-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.8rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .market-card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            background-color: rgba(46, 139, 87, 0.1);
+            border-radius: 0 0 0 100%;
+        }
+        
+        .market-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .market-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .market-type {
+            background-color: var(--light);
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        
+        /* Water-wave inspired outcomes */
+        .outcomes {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        
+        .outcome {
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .outcome:hover {
+            transform: translateY(-5px);
+        }
+        
+        .outcome.yes {
+            background: linear-gradient(135deg, rgba(76,201,167,0.1) 0%, rgba(255,255,255,0.5) 100%);
+            border: 1px solid var(--success);
+        }
+        
+        .outcome.no {
+            background: linear-gradient(135deg, rgba(255,107,107,0.1) 0%, rgba(255,255,255,0.5) 100%);
+            border: 1px solid var(--danger);
+        }
+        
+        .outcome-label {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .outcome-price {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 0.5rem 0;
+        }
+        
+        .outcome-percent {
+            color: var(--dark);
+            opacity: 0.8;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .bet-input {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 0.8rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .bet-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(46,139,87,0.2);
+        }
+        
+        .bet-btn {
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .yes .bet-btn {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .no .bet-btn {
+            background-color: var(--danger);
+            color: white;
+        }
+        
+        .bet-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        /* Organic chart container */
+        .chart-container {
+            height: 280px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .chart-container::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background-color: rgba(58, 134, 255, 0.05);
+            border-radius: 50%;
+            transform: translate(30%, 30%);
+        }
+        
+        .chart-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--dark);
+            opacity: 0.7;
+            font-size: 1.1rem;
+        }
+        
+        /* Positions table with leaf accents */
+        .positions-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        
+        .positions-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .positions-title i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .positions-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .positions-table th {
+            text-align: left;
+            padding: 0.8rem;
+            font-weight: 600;
+            color: var(--dark);
+            border-bottom: 2px solid var(--light);
+        }
+        
+        .positions-table td {
+            padding: 1rem 0.8rem;
+            border-bottom: 1px solid var(--light);
+        }
+        
+        .position-yes {
+            color: var(--success);
+            font-weight: 600;
+        }
+        
+        .position-no {
+            color: var(--danger);
+            font-weight: 600;
+        }
+        
+        /* Eco-news sidebar */
+        .news-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 100px;
+        }
+        
+        .news-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            color: var(--dark);
+        }
+        
+        .news-title i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        .news-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--light);
+        }
+        
+        .news-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .news-item-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .news-item-source {
+            font-size: 0.8rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.3rem;
+        }
+        
+        .news-item-date {
+            font-size: 0.8rem;
+            color: #999;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 992px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .news-container {
+                position: static;
+                margin-top: 2rem;
+            }
+        }
+        .username {
+            font-weight: bold;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Eco-themed Navigation -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-seedling"></i>
+            Ambitus
+        </div>
+        <div class="nav-links">
+            <a href="#">Markets</a>
+            <a href="#">Eco Futures</a>
+            <a href="#">Climate Bonds</a>
+            <a href="#">Impact</a>
+        </div>
+        <div class="user-actions">
+            <div class="carbon-footprint">
+                <i class="fas fa-leaf"></i> Carbon Neutral
+            </div>
+            <button class="connect-btn">
+                <i class="fas fa-wallet"></i> Connect
+            </button>
+            <% if (user) { %>
+                <span class="username">Welcome, <%= user %></span>
+                <a href="/logout" class="connect-btn">Sign Out</a>
+            <% } else { %>
+                <a href="/login" class="connect-btn">Sign In</a>
+            <% } %>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Left Column -->
+        <div class="left-column">
+            <!-- Market Header -->
+            <h1 class="market-title">Men's College Basketball Championship</h1>
+            <div class="market-meta">
+                <span class="market-type">Sports</span>
+                <span><i class="far fa-clock"></i> Closes: Apr 3, 2025</span>
+            </div>
+            
+            <!-- Duke Market Card -->
+            <div class="market-card">
+                <h2 class="market-title">Will Duke win the championship?</h2>
+                <div class="outcomes">
+                    <div class="outcome yes">
+                        <div class="outcome-label">YES</div>
+                        <div class="outcome-price">0.68</div>
+                        <div class="outcome-percent">68% probability</div>
+                        <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                        <button class="bet-btn">Buy YES</button>
+                    </div>
+                    <div class="outcome no">
+                        <div class="outcome-label">NO</div>
+                        <div class="outcome-price">0.32</div>
+                        <div class="outcome-percent">32% probability</div>
+                        <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                        <button class="bet-btn">Buy NO</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Florida Market Card -->
+            <div class="market-card">
+                <h2 class="market-title">Will Florida win the championship?</h2>
+                <div class="outcomes">
+                    <div class="outcome yes">
+                        <div class="outcome-label">YES</div>
+                        <div class="outcome-price">0.45</div>
+                        <div class="outcome-percent">45% probability</div>
+                        <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                        <button class="bet-btn">Buy YES</button>
+                    </div>
+                    <div class="outcome no">
+                        <div class="outcome-label">NO</div>
+                        <div class="outcome-price">0.55</div>
+                        <div class="outcome-percent">55% probability</div>
+                        <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                        <button class="bet-btn">Buy NO</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Price Chart -->
+            <div class="chart-container">
+                <div class="chart-placeholder">
+                    <i class="fas fa-chart-line"></i> Duke Championship Probability Trend
+                </div>
+            </div>
+            
+            <!-- Positions Table -->
+            <div class="positions-container">
+                <h3 class="positions-title">
+                    <i class="fas fa-chart-pie"></i> Your Positions
+                </h3>
+                <table class="positions-table">
+                    <thead>
+                        <tr>
+                            <th>Market</th>
+                            <th>Position</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Duke wins</td>
+                            <td class="position-yes">YES</td>
+                            <td>$150.00</td>
+                            <td>Mar 28, 2025</td>
+                        </tr>
+                        <tr>
+                            <td>Florida wins</td>
+                            <td class="position-no">NO</td>
+                            <td>$75.00</td>
+                            <td>Mar 25, 2025</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Right Column (News) -->
+        <div class="right-column">
+            <div class="news-container">
+                <h3 class="news-title">
+                    <i class="fas fa-newspaper"></i> Eco Sports News
+                </h3>
+                <div class="news-item">
+                    <div class="news-item-source">Green Sports Alliance</div>
+                    <div class="news-item-title">Duke advances to Final Four with carbon-neutral travel</div>
+                    <div class="news-item-date">Mar 28, 2025</div>
+                </div>
+                <div class="news-item">
+                    <div class="news-item-source">Eco Athlete</div>
+                    <div class="news-item-title">Florida's sustainability initiatives earn NCAA recognition</div>
+                    <div class="news-item-date">Mar 26, 2025</div>
+                </div>
+                <div class="news-item">
+                    <div class="news-item-source">Climate Sports</div>
+                    <div class="news-item-title">Championship venues commit to 100% renewable energy</div>
+                    <div class="news-item-date">Mar 24, 2025</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Interactive functionality
+        document.querySelectorAll('.bet-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const amount = this.previousElementSibling.value;
+                const outcome = this.closest('.outcome').classList.contains('yes') ? 'YES' : 'NO';
+                const market = this.closest('.market-card').querySelector('.market-title').textContent;
+                
+                if (!amount || isNaN(amount) || amount <= 0) {
+                    alert('Please enter a valid amount');
+                    return;
+                }
+                
+                alert(`Placed $${amount} ${outcome} bet on:\n"${market}"\n\n2% of this trade will fund reforestation projects.`);
+            });
+        });
+        
+        document.querySelector('.connect-btn').addEventListener('click', function() {
+            alert('Ambitus connects with sustainable crypto wallets\n\nWe offset all transaction emissions through verified carbon credits.');
+        });
+    </script>
+</body>
+</html>
