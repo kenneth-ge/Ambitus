@@ -113,7 +113,7 @@
         .container {
             max-width: 1200px;
             margin: 2rem auto;
-            padding: 0 1.5rem;
+            padding: 0 1.8rem;
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 2rem;
@@ -123,12 +123,15 @@
         .market-card {
             background-color: var(--card-bg);
             border-radius: 12px;
-            padding: 1.8rem;
+            padding: 3.7rem;
+            padding-top: 0.8rem;
+            padding-bottom: 0.8rem;
             margin-bottom: 2rem;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            border-left: 5px solid var(--primary);
+            border-left: px solid var(--primary);
             position: relative;
             overflow: hidden;
+            justify-content: space-between; /* Consistent content distribution */
         }
         
         .market-card::after {
@@ -136,7 +139,7 @@
             position: absolute;
             top: 0;
             right: 0;
-            width: 60px;
+            width: 80px;
             height: 60px;
             background-color: rgba(46, 139, 87, 0.1);
             border-radius: 0 0 0 100%;
@@ -213,7 +216,8 @@
         
         .bet-input {
             width: 100%;
-            padding: 0.8rem;
+            padding-top: 0.8rem;
+            padding-bottom: 0.8rem;
             margin-bottom: 0.8rem;
             border: 1px solid #e0e0e0;
             border-radius: 8px;
@@ -417,9 +421,9 @@
         </div>
         <div class="nav-links">
             <a href="#">Markets</a>
-            <a href="#">Eco Futures</a>
-            <a href="#">Climate Bonds</a>
-            <a href="#">Impact</a>
+            <a href="#">News</a>
+            <a href="#">Portfolio</a>
+            <a href="#">Shop</a>
         </div>
         <div class="user-actions">
             <div class="carbon-footprint">
@@ -442,62 +446,100 @@
         <!-- Left Column -->
         <div class="left-column">
             <!-- Market Header -->
-            <h1 class="market-title">Men's College Basketball Championship</h1>
-            <div class="market-meta">
-                <span class="market-type">Sports</span>
-                <span><i class="far fa-clock"></i> Closes: Apr 3, 2025</span>
-            </div>
-            
-            <!-- Duke Market Card -->
+        
             <div class="market-card">
-                <h2 class="market-title">Will Duke win the championship?</h2>
+                <h2 class="market-title">Will climate tech venture capital investments exceed $85bn in 2025?</h1>
+                <div class="market-meta">
+                    <span class="market-type">Financials</span>
+                    <span><i class="far fa-clock"></i> Closes: January, 2026</span>
+                </div>
+                
                 <div class="outcomes">
                     <div class="outcome yes">
                         <div class="outcome-label">YES</div>
-                        <div class="outcome-price">0.68</div>
-                        <div class="outcome-percent">68% probability</div>
+                        <div class="outcome-price">$0.88</div>
+                        <div class="outcome-percent">88% probability</div>
                         <input type="number" class="bet-input" placeholder="Enter amount ($)">
                         <button class="bet-btn">Buy YES</button>
                     </div>
                     <div class="outcome no">
                         <div class="outcome-label">NO</div>
-                        <div class="outcome-price">0.32</div>
-                        <div class="outcome-percent">32% probability</div>
+                        <div class="outcome-price">$0.12</div>
+                        <div class="outcome-percent">12% probability</div>
                         <input type="number" class="bet-input" placeholder="Enter amount ($)">
                         <button class="bet-btn">Buy NO</button>
                     </div>
                 </div>
+                <div class="verification" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
+                    Source: Pitchbook / CB Insights 
+                </div>
             </div>
-            
-            <!-- Florida Market Card -->
+    
             <div class="market-card">
-                <h2 class="market-title">Will Florida win the championship?</h2>
+                <h2 class="market-title">Will India's renewable energy capacity surpass 200 GW by June 2025?</h2>
+                <div class="market-meta">
+                    <span class="market-type">Technology</span>
+                    <span><i class="far fa-clock"></i> Closes: June 2025</span>
+                </div>
+
                 <div class="outcomes">
                     <div class="outcome yes">
                         <div class="outcome-label">YES</div>
-                        <div class="outcome-price">0.45</div>
+                        <div class="outcome-price">$0.45</div>
                         <div class="outcome-percent">45% probability</div>
                         <input type="number" class="bet-input" placeholder="Enter amount ($)">
                         <button class="bet-btn">Buy YES</button>
                     </div>
                     <div class="outcome no">
                         <div class="outcome-label">NO</div>
-                        <div class="outcome-price">0.55</div>
+                        <div class="outcome-price">$0.55</div>
                         <div class="outcome-percent">55% probability</div>
                         <input type="number" class="bet-input" placeholder="Enter amount ($)">
                         <button class="bet-btn">Buy NO</button>
                     </div>
                 </div>
+                <div class="verification" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
+                    Source: Indian Ministry of Power 
+                </div>
+            </div>
+
+
+            <div class="market-card">
+                <h2 class="market-title">Will >30% of global coral reefs experience severe bleaching in 2025?</h2>
+                <div class="market-meta">
+                    <span class="market-type">Ecological</span>
+                    <span><i class="far fa-clock"></i> Closes: January 2025</span>
+                </div>
+
+                <div class="outcomes">
+                    <div class="outcome yes">
+                        <div class="outcome-label">YES</div>
+                        <div class="outcome-price">$0.70</div>
+                        <div class="outcome-percent">70% probability</div>
+                        <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                        <button class="bet-btn">Buy YES</button>
+                    </div>
+                    <div class="outcome no">
+                        <div class="outcome-label">NO</div>
+                        <div class="outcome-price">$0.30</div>
+                        <div class="outcome-percent">30% probability</div>
+                        <input type="number" class="bet-input" placeholder="Enter amount ($)">
+                        <button class="bet-btn">Buy NO</button>
+                    </div>
+                </div>
+                <div class="verification" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
+                    Source: NOAA Coral Reef Watch
+                </div>
             </div>
             
-            <!-- Price Chart -->
+            <!-- Price Chart 
             <div class="chart-container">
                 <div class="chart-placeholder">
                     <i class="fas fa-chart-line"></i> Duke Championship Probability Trend
                 </div>
-            </div>
+            </div> -->
             
-            <!-- Positions Table -->
+            <!-- Positions Table 
             <div class="positions-container">
                 <h3 class="positions-title">
                     <i class="fas fa-chart-pie"></i> Your Positions
@@ -530,10 +572,11 @@
         </div>
         
         <!-- Right Column (News) -->
+
         <div class="right-column">
             <div class="news-container">
                 <h3 class="news-title">
-                    <i class="fas fa-newspaper"></i> Eco Sports News
+                    🌍  Climate Digest
                 </h3>
                 <div class="news-item">
                     <div class="news-item-source">Green Sports Alliance</div>

@@ -8,6 +8,9 @@
   "author": "",
   "license": "ISC",
   "description": "",
+  "nodemonConfig": {
+    "ignore": ["*.json", "public/*.js"]
+  },
   "dependencies": {
     "ejs": "^3.1.10",
     "express": "^4.21.2",

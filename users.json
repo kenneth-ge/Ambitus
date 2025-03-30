@@ -1,0 +1,30 @@
+{
+  "kenny": {
+    "balance": 900,
+    "bids": [
+      {
+        "userId": "kenny",
+        "price": "25",
+        "yesNo": "no",
+        "betId": "0",
+        "createdAt": "2025-03-30T01:33:10.040Z"
+      }
+    ],
+    "boughtContracts": [
+      {
+        "userId": "kenny",
+        "price": "75",
+        "yesNo": "yes",
+        "betId": "0",
+        "createdAt": "2025-03-30T01:37:08.919Z"
+      },
+      {
+        "userId": "kenny",
+        "price": "25",
+        "yesNo": "no",
+        "betId": "0",
+        "createdAt": "2025-03-30T01:37:20.079Z"
+      }
+    ]
+  }
+}

@@ -10,8 +10,40 @@ const {
     loadData: loadUserData,
 } = require('./users');
 
+const {
+    formatUnixTimestamp
+} = require('./utils');
+
 // In-memory storage for users and bets
-let bets = {};   // Key: betId, Value: { yesOrders: MinHeap, noOrders: MaxHeap, contracts: [] }
+let bets = {};   
+// Key: betId, 
+/*Value: 
+title, 
+tag,
+tagTitle, 
+resolveDate,
+verifierSource,
+yesOrders: new Heap((a, b) => a.price - b.price),  // Min-heap for Yes orders
+noOrders: new Heap((a, b) => b.price - a.price),   // Max-heap for No orders
+contracts: []
+*/
+
+function cloneBet(oldBet){
+    let ret = {}
+
+    ret.title = oldBet.title
+    ret.tag = oldBet.tag
+    ret.tagTitle = oldBet.tagTitle
+    ret.resolveDate = oldBet.resolveDate
+    ret.humanReadableEndDate = oldBet.humanReadableEndDate
+    ret.verifierSource = oldBet.verifierSource
+    ret.contracts = oldBet.contracts
+    
+    ret.yesOrders = oldBet.yesOrders.toArray()
+    ret.noOrders = oldBet.noOrders.toArray()
+
+    return ret
+}
 
 // Path to save users and bets to a file
 const betsFilePath = path.join(__dirname, 'yesno_bets.json');
@@ -21,7 +53,19 @@ function loadData() {
     try {
         if (fs.existsSync(betsFilePath)) {
             const data = fs.readFileSync(betsFilePath, 'utf8');
+            console.log('load data', data)
             bets = JSON.parse(data);
+
+            for(let key in bets){
+                let yesItems = bets[key].yesOrders
+                let noItems = bets[key].noOrders
+
+                bets[key].yesOrders = new Heap((a, b) => a.price - b.price),  // Min-heap for Yes orders
+                bets[key].noOrders = new Heap((a, b) => b.price - a.price)
+                
+                bets[key].yesOrders.init(yesItems)
+                bets[key].noOrders.init(noItems)
+            }
         }
     } catch (err) {
         console.error('Error loading data from file:', err);
@@ -30,9 +74,23 @@ function loadData() {
 
 // Function to save users and bets to files
 function saveData() {
+    let serialized = {}
+    
+    for(let key in bets){
+        let oldBet = bets[key]
+        let newBet = cloneBet(oldBet)
+
+        serialized[key] = newBet
+    }
+
+    let dataToWrite = JSON.stringify(serialized, null, 2)
+    console.log('writing...')
+    console.log(dataToWrite)
     try {
-        fs.writeFileSync(betsFilePath, JSON.stringify(bets, null, 2), 'utf8');
-        console.log('Bets data saved to file');
+        fs.writeFileSync(betsFilePath, dataToWrite, 'utf8');
+
+        // Verify by reading the file right after writing
+        const savedData = fs.readFileSync(betsFilePath, 'utf8');
     } catch (err) {
         console.error('Error saving data to file:', err);
     }
@@ -40,23 +98,27 @@ function saveData() {
 }
 
 // Add a new bet
-function addBet(betId, title, tag, resolveDate, verifierSource) {
-    if (!bets[betId]) {
-        bets[betId] = {
-            title,
-            tag,
-            resolveDate,
-            verifierSource,
-            yesOrders: new Heap((a, b) => a.price - b.price),  // Min-heap for Yes orders
-            noOrders: new Heap((a, b) => b.price - a.price),   // Max-heap for No orders
-            contracts: []
-        };
-        saveData();
+function addBet(betId, title, tag, tagTitle, resolveDate, verifierSource) {
+    if (bets[betId]) {
+        console.warn('[IGNORING] Already in database', bets[betId])
     }
+
+    bets[betId] = {
+        title,
+        tag,
+        tagTitle,
+        resolveDate,
+        humanReadableEndDate: formatUnixTimestamp(resolveDate),
+        verifierSource,
+        yesOrders: new Heap((a, b) => a.price - b.price),  // Min-heap for Yes orders
+        noOrders: new Heap((a, b) => b.price - a.price),   // Max-heap for No orders
+        contracts: []
+    };
+    saveData();
 }
 
 // Add a contract to a bet
-function addContract(userId, betId, price, yesNo) {
+function addBid(userId, betId, price, yesNo) {
     // Check if the user exists
     if (!users[userId]) {
         console.log('User not found')
@@ -93,12 +155,19 @@ function addContract(userId, betId, price, yesNo) {
     // Add the contract to the user's list of bids
     user.bids.push(contract);
 
+    // console.log(Object.getPrototypeOf(bet.yesOrders))
+    // console.log(Object.getPrototypeOf(bet.noOrders))
+    // console.log(Object.getPrototypeOf(new Heap()))
+
     // Add the contract to the appropriate queue based on whether it's 'yes' or 'no'
     if (yesNo === 'yes') {
         bet.yesOrders.push(contract);  // Add to yes queue
     } else {
         bet.noOrders.push(contract);   // Add to no queue
     }
+
+    console.log('add bet orders and stuff')
+    console.log(bet.yesOrders, bet.noOrders)
 
     // match orders if possible
     matchOrders(betId)
@@ -170,7 +239,7 @@ function getLineChart(betId) {
         let price = contract.price
 
         if(contracts.yesNo === 'no'){
-            price = 1 - price
+            price = 100 - price
         }
 
         history.push(price);
@@ -179,14 +248,51 @@ function getLineChart(betId) {
     return histogram;
 }
 
+/*
+Value: 
+title, 
+tag,
+tagTitle, 
+resolveDate,
+verifierSource,
+yesOrders: new Heap((a, b) => a.price - b.price),  // Min-heap for Yes orders
+noOrders: new Heap((a, b) => b.price - a.price),   // Max-heap for No orders
+contracts: []
+*/
+function getYesNoBets(){
+    returnBets = {}
+
+    for (let key in bets) {
+        let newBet = cloneBet(bets[key])
+        
+        console.log('stuff', newBet, [key])
+
+        let lastContract = newBet.contracts.at(-1)
+        let penultimateContract = newBet.contracts.at(-2)
+        let lastYesPrice = lastContract.yesNo == 'yes' ? lastContract.price : penultimateContract.price
+        let lastNoPrice = lastContract.yesNo == 'no' ? lastContract.price : penultimateContract.price
+
+        newBet.yesprob = lastYesPrice
+        newBet.noprob = lastNoPrice
+
+        newBet.yesprice = bets[key].yesOrders.peek()
+        newBet.noprice = 100 - bets[key].noOrders.peek()
+
+        returnBets[key] = newBet
+    }
+
+    return returnBets
+}
+
 // Load data when starting the app
 loadData();
 
 module.exports = {
     addBet,
-    addContract,
+    addBid,
     matchOrders,
     getLineChart,
     saveData,
     loadData,
+    getYesNoBets
 };

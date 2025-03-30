@@ -207,6 +207,8 @@
         .bet-input {
             width: 100%;
             padding: 0.5rem;
+            padding-top: 1.3rem;
+            padding-bottom: 1.3rem;
             margin: 0.5rem 0;
             border: 1px solid #ddd;
             border-radius: 6px;
@@ -282,6 +284,34 @@
         @keyframes ripple {
             to { transform: scale(4); opacity: 0; }
         }
+
+        .nav-links a {
+            position: relative;
+            display: inline-block;  /* Ensures the element is only as wide as the text */
+            font-size: 1.2em;  /* Adjust size as needed */
+            color: white;
+            padding: 10px 15px;  /* Add padding around the text */
+        }
+
+        .nav-links a::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;  /* Matches the width of the text */
+            height: 120%;  /* Slightly larger than the text to form an elliptical shape */
+            background: rgba(0, 0, 0, 0.5);  /* Semi-transparent black */
+            filter: blur(8px);  /* Apply blur effect */
+            z-index: -1;  /* Ensure it's behind the text */
+            border-radius: 50%;  /* Optional: Makes the highlight elliptical */
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
     </style>
 </head>
 <body>
@@ -293,9 +323,9 @@
         </div>
         <div class="nav-links">
             <a href="#">Markets</a>
-            <a href="#">Portfolio</a>
-            <a href="#">Impact</a>
             <a href="#">News</a>
+            <a href="#">Portfolio</a>
+            <a href="#">Shop</a>
         </div>
         <div class="user-actions">
             <button class="connect-btn">
@@ -317,38 +347,40 @@
 
     <!-- Main Content -->
     <div class="container">
-        <!-- Left Column -->
-        <div class="left-column">
-            <!-- All 20 Market Cards -->
-            <!-- Example Card 1 -->
-            <div class="market-card" data-category="agreements">
-                <h2 class="market-title">Global Methane Pledge: 30% Reduction by Sept 2025?</h2>
+        <% for (let key in cards) { %> <!-- Loop through the dictionary keys -->
+            <div class="market-card" data-category="<%= cards[key].tag %>">
+                <h2 class="market-title"><%= cards[key].title %></h2>
                 <div class="market-meta">
-                    <span class="market-type">International Agreement</span>
-                    <span><i class="far fa-clock"></i> Resolves: Sept 2025</span>
+                    <span class="market-type"><%= cards[key].tagTitle %></span>
+                    <span><i class="far fa-clock"></i> Resolves: <%= cards[key].humanReadableEndDate %></span>
                 </div>
                 <div class="outcomes">
                     <div class="outcome yes">
                         <div class="outcome-header">
                             <span class="outcome-label">YES</span>
-                            <span class="probability">78%</span>
+                            <span class="probability"><%= cards[key].yesprob %>%</span>
                         </div>
                         <input type="number" class="bet-input" placeholder="Enter amount ($)">
-                        <button class="bet-btn">Buy YES $0.78</button>
+                        <button class="bet-btn">Buy YES $0.<%= cards[key].yesprice %></button>
                     </div>
                     <div class="outcome no">
                         <div class="outcome-header">
                             <span class="outcome-label">NO</span>
-                            <span class="probability">22%</span>
+                            <span class="probability"><%= cards[key].noprob %>%</span>
                         </div>
                         <input type="number" class="bet-input" placeholder="Enter amount ($)">
-                        <button class="bet-btn">Buy NO $0.22</button>
+                        <button class="bet-btn">Buy NO $0.<%= cards[key].noprice %></button>
                     </div>
                 </div>
                 <div class="verification" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
                     Source: UNEP Progress Report
                 </div>
             </div>
+        <% }; %>
+        <!-- Left Column -->
+        <div class="left-column">
+            <!-- All 20 Market Cards -->
+            <!-- Example Card 1 -->
             
             <!-- Example Card 2 -->
             <div class="market-card" data-category="policy">

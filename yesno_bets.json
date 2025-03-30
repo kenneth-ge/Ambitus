@@ -1,1 +1,28 @@
-{}
+{
+  "0": {
+    "title": "Global Methane Pledge: 30% Reduction by Sept 2025?",
+    "tag": "agreements",
+    "tagTitle": "International Agreement",
+    "resolveDate": 1756699200,
+    "humanReadableEndDate": "Mon, Sep 1, 2025 at 12 AM EDT",
+    "verifierSource": "UNEP Progress Report",
+    "contracts": [
+      {
+        "userId": "kenny",
+        "price": "75",
+        "yesNo": "yes",
+        "betId": "0",
+        "createdAt": "2025-03-30T01:37:08.919Z"
+      },
+      {
+        "userId": "kenny",
+        "price": "25",
+        "yesNo": "no",
+        "betId": "0",
+        "createdAt": "2025-03-30T01:37:20.079Z"
+      }
+    ],
+    "yesOrders": [],
+    "noOrders": []
+  }
+}

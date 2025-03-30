@@ -6,11 +6,12 @@ const port = 3000;
 
 const {
     addBet,
-    addContract,
+    addBid: addYesNoBid,
     matchOrders,
     getLineChart,
-    saveData,
-    loadData,
+    saveData: saveYesNoData,
+    loadData: loadYesNoData,
+    getYesNoBets
 } = require('./yesno_contracts');
 
 const {
@@ -117,7 +118,9 @@ app.get('/logout', (req, res) => {
 //////////////////////////////////////////////////////////////////////
 
 app.get('/yesno', (req, res) => {
-    res.render('yesno')
+    res.render('yesno', {
+        cards: getYesNoBets()
+    })
 })
 
 /////////////////////////////////////////////////////////////////////
@@ -135,21 +138,22 @@ app.get('/user/enrichen_user', (req, res) => {
 ///////////////////////////////////////////////////////////////////////
 
 app.post('/yesno/addBet', (req, res) => {
-    const { betId, title, tag, resolveDate, verifierSource } = req.body;
-    addBet(betId, title, tag, resolveDate, verifierSource)
+    const { betId, title, tag, tagTitle, resolveDate, verifierSource } = req.body;
+    console.log(req.body)
+    addBet(betId, title, tag, tagTitle, resolveDate, verifierSource)
     res.status(201).json({ message: 'Bet added successfully' });
 })
 
 // Route to add a new contract
-app.post('/yesno/addContract', (req, res) => {
+app.post('/yesno/addYesNoBid', (req, res) => {
     const { userId, betId, price, yesNo } = req.body;
 
     if (!userId || !betId || !price || (yesNo !== 'yes' && yesNo !== 'no')) {
         return res.status(400).json({ message: 'Missing or invalid data' });
     }
 
-    addContract(userId, betId, price, yesNo);
-    res.status(201).json({ message: 'Contract created successfully' });
+    let result = addYesNoBid(userId, betId, price, yesNo);
+    res.status(201).json(result);
 });
 
 // Route to get the histogram of contract prices
@@ -161,7 +165,8 @@ app.get('/yesno/linechart', (req, res) => {
 
 // Optionally, you can expose a route to save contracts manually (e.g., for periodic saving)
 app.get('/yesno/save-contracts', (req, res) => {
-    saveContracts();
+    console.log('saving contracts manually...')
+    saveYesNoData();
     res.json({ message: 'Contracts saved manually' });
 });
 
