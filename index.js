@@ -33,11 +33,12 @@ const {
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
 
+// Serve static files (like CSS, JS, images, etc.) from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Set the views folder (where your .ejs files will be stored)
 app.set('views', path.join(__dirname, 'views'));
 
-// Serve static files (like CSS, JS, images, etc.) from the 'public' directory
-app.use(express.static(path.join(__dirname, 'public')));
 
 // Middleware to parse JSON bodies
 app.use(express.json());
