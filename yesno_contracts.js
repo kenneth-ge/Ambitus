@@ -60,8 +60,8 @@ function loadData() {
                 let yesItems = bets[key].yesOrders
                 let noItems = bets[key].noOrders
 
-                bets[key].yesOrders = new Heap((a, b) => a.price - b.price),  // Min-heap for Yes orders
-                bets[key].noOrders = new Heap((a, b) => b.price - a.price)
+                bets[key].yesOrders = new Heap((a, b) => parseInt(a.price) - parseInt(b.price)),  // Min-heap for Yes orders
+                bets[key].noOrders = new Heap((a, b) => parseInt(b.price) - parseInt(a.price))
                 
                 bets[key].yesOrders.init(yesItems)
                 bets[key].noOrders.init(noItems)
@@ -195,9 +195,10 @@ function matchOrders(betId) {
         const bestNo = bet.noOrders.peek();   // Get the best (highest) no price
 
         // If the best yes price and the bet no price add up to >= 1, a match is possible
-        if (bestYes.price + bestNo.price >= 1) {
+        if (parseInt(bestYes.price) + parseInt(bestNo.price) >= 100) {
             // Perform transaction logic here, such as updating user balances or removing matched orders
             console.log('Matching Orders for Bet:', bestYes, bestNo);
+            console.log('total price sum:', parseInt(bestYes.price), parseInt(bestNo.price))
 
             // Deduct the amount from the user's balance
             users[bestYes.userId].balance -= bestYes.price;
@@ -275,8 +276,14 @@ function getYesNoBets(){
         newBet.yesprob = lastYesPrice
         newBet.noprob = lastNoPrice
 
-        newBet.yesprice = bets[key].yesOrders.peek()
-        newBet.noprice = 100 - bets[key].noOrders.peek()
+        newBet.yesprice = parseInt(bets[key].yesOrders.peek().price)
+        newBet.noprice = parseInt(bets[key].noOrders.peek().price)
+    
+        console.log(bets[key].yesOrders)
+        console.log(bets[key].noOrders)
+        console.log(bets[key].noOrders.peek())
+        console.log('newBet.yesprice', newBet.yesprice)
+        console.log('newBet.noprice', newBet.noprice)
 
         returnBets[key] = newBet
     }
