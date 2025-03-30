@@ -392,6 +392,14 @@
         "guessValue": 20,
         "betId": "0",
         "createdAt": "2025-03-30T08:11:37.280Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": "50",
+        "guessValue": "53",
+        "betId": "1",
+        "createdAt": "2025-03-30T08:58:02.393Z"
       }
     ]
   },

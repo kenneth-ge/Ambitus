@@ -92,10 +92,7 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             position: relative; /* Required for positioning the circle */
             overflow: visible; /* Ensures the circle isn't clipped */
-}
-
-/* Add the decorative circle */
-<div class="market-card">
+        }
 
         .market-card::after {
              content: "";
@@ -108,7 +105,7 @@
              border-radius: 50%;
              opacity: 0.3;
              z-index: 2;
-}
+        }
 
       /* Filter Styles */
       .category-filters {
@@ -133,10 +130,7 @@
             background: var(--success);
             border-color: var(--success);
         }
-
-
         
-
         .market-title {
             font-size: 1.2rem;
             font-weight: 600;
@@ -232,8 +226,56 @@
             border-radius: 6px;
             font-size: 1rem;
         }
+
+                /* Toast notification styling */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+            color: white;
+            padding: 20px 40px;
+            border-radius: 10px;
+            font-size: 18px;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1000;
+            transition: opacity 0.5s, visibility 0.5s;
+            backdrop-filter: blur(10px); /* Apply blur effect to background */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Shadow for a 3D effect */
+        }
+
+        /* To make the toast visible */
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+
+        .connect-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .connect-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .histogramBox {
+            background: white;
+        }
     </style>
 <body>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-array"></script> 
+
     <nav class="navbar">
         <div class="logo">
             <i class="fas fa-seedling"></i>
@@ -250,7 +292,12 @@
                 <i class="fas fa-wallet"></i> Connect Wallet
             </button>
         </div>
-        
+        <% if (user) { %>
+            <span class="username">Welcome, <%= user %></span>
+            <a href="/logout" class="connect-btn">Sign Out</a>
+        <% } else { %>
+            <a href="/login?redirect=/blind" class="connect-btn">Sign In</a>
+        <% } %>
     </nav>
 
     <div class="category-filters">
@@ -264,10 +311,99 @@
     </div>
 
     <script>
-        function placeBet(key){
+        async function placeBet(key){
+            let numContracts = document.getElementById('numcontracts' + key).value
+            let guessValue = document.getElementById('estimate' + key).value
 
+            let requestData = {betId: key, numContracts, guessValue}
+
+            // Make the fetch request
+            const response = await fetch('/blind/addContract', {
+                method: 'POST',            // HTTP method
+                headers: {
+                    'Content-Type': 'application/json'  // Tell the server we're sending JSON data
+                },
+                body: JSON.stringify(requestData)    // Convert the object to JSON string
+            });
+
+            // Wait for the response to be parsed as JSON
+            const data = await response.json();
+
+            if (data.success) {
+                toast('Submitted bid successfully!');
+            } else {
+                toast('Bid failed due to reason: ' + data.reason);
+            }
+        }
+
+        // Function to show the toast
+        function toast(text) {
+            const toast = document.getElementById('toast');
+            
+            toast.innerHTML = text
+
+            // Add 'show' class to make the toast visible
+            toast.classList.add('show');
+
+            // Automatically hide the toast after 3 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000); // Toast disappears after 3 seconds
+        }
+
+        async function loadChart(key){
+            let id = `histogramChart${key}`
+            const response = await fetch(`/blind/getdata_real?betId=${key}`);
+            const data = (await response.json());
+
+            // Convert to expanded dataset (repeat values by frequency)
+            const rawData = data.flatMap(({ value, frequency }) =>
+                Array(frequency).fill(value)
+            );
+
+            // Use D3 to automatically bin data
+            // Calculate the number of bins using Scott's Rule
+            const binCount = Math.max(10, d3.thresholdScott(rawData)); // Ensures at least 10 bins
+
+            const binGenerator = d3.bin()
+                .domain([Math.min(...rawData), Math.max(...rawData)]) // Auto-detect min/max
+                .thresholds(binCount)  // Scott's Rule
+                .value(d => d);
+            const bins = binGenerator(rawData);
+
+            // Extract labels (bin ranges) and frequencies
+            const labels = bins.map(bin => `${bin.x0}-${bin.x1}`);
+            const frequencies = bins.map(bin => bin.length);
+
+            // Draw histogram with Chart.js
+            const ctx = document.getElementById(id).getContext('2d');
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Frequency',
+                    data: frequencies,
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+                },
+                options: {
+                scales: {
+                    x: { title: { display: true, text: 'Value Range' } },
+                    y: { title: { display: true, text: 'Frequency' }, beginAtZero: true }
+                }
+                }
+            });
         }
     </script>
+
+    <!-- Toast container (hidden by default) -->
+    <div id="toast" class="toast">
+    
+    </div>
 
     <div class="container">
         <% for (let key in cards) { %> 
@@ -291,6 +427,12 @@
                     <span class="market-type"><%= cards[key].tagTitle %></span>
                     <span><i class="far fa-clock"></i> <%= cards[key].humanReadableEndDate %></span>
                 </div>
+                <div class="histogramBox">
+                    <canvas id="histogramChart<%=key%>"></canvas>
+                    <script>
+                        loadChart('<%=key%>')
+                    </script>
+                </div>
                 <div class="slider-container">
                     <input type="range" class="confidence-slider" min="<%= cards[key].range[0] %>" max="<%= cards[key].range[1] %>" value="50"
                     oninput="document.getElementById('estimate<%=key%>').value = this.value">
@@ -312,53 +454,6 @@
                 </div>
             </div>
         <% }; %>
-
-        <!-- Card 2 -->
-        <div class="market-card" data-category="environment">
-            <h2 class="market-title">How many catastrophic fire danger days will Australia experience in 2025?</h2>
-            <div class="market-meta">
-                <span class="market-type">Extreme Weather</span>
-                <span><i class="far fa-clock"></i> January 2026</span>
-            </div>
-            <div class="slider-container">
-                <input type="range" class="confidence-slider" min="0" max="100" value="50">
-                <div class="slider-labels">
-                    <span>Less Confident</span>
-                    <span>More Confident</span>
-                </div>
-            </div>
-            <div class="choice-buttons">
-                <button class="choice-btn yes">YES</button>
-                <button class="choice-btn no">NO</button>
-            </div>
-            <div class="verification">
-                Source: Australia Bureau of Meteorology
-            </div>
-        </div> 
-        
-        <!-- Card 3-->
-        <div class="market-card" data-category="environment">
-            <h2 class="market-title">How many named storms will the 2025 Atlantic Hurricane Season Produce?</h2>
-            <div class="market-meta">
-                <span class="market-type">Extreme Weather</span>
-                <span><i class="far fa-clock"></i> November 2025</span>
-            </div>
-            <div class="slider-container">
-                <input type="range" class="confidence-slider" min="0" max="100" value="50">
-                <div class="slider-labels">
-                    <span>Less Confident</span>
-                    <span>More Confident</span>
-                </div>
-            </div>
-            <div class="choice-buttons">
-                <button class="choice-btn yes">YES</button>
-                <button class="choice-btn no">NO</button>
-            </div>
-            <div class="verification">
-                Source <!--- could replace "Source" w/emoji-->: NOAA Seasonal Outlook
-            </div>
-        </div>"
-
         
     <script>
         // Slider interaction

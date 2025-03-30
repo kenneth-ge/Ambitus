@@ -4,7 +4,10 @@
     "tag": "weather",
     "resolveDate": 1764478800,
     "verifierSource": "NOAA Seasonal Outlook",
-    "range": [0, 100],
+    "range": [
+      0,
+      100
+    ],
     "contracts": []
   },
   "1": {
@@ -12,15 +15,30 @@
     "tag": "weather",
     "resolveDate": 1767243600,
     "verifierSource": "Australia Bureau of Meteorology",
-    "range": [0, 365],
-    "contracts": []
+    "range": [
+      0,
+      365
+    ],
+    "contracts": [
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": "50",
+        "guessValue": "53",
+        "betId": "1",
+        "createdAt": "2025-03-30T08:58:02.393Z"
+      }
+    ]
   },
   "2": {
     "title": "What % of global coral reegs will experience severe bleaching in 2025?",
     "tag": "ecological",
     "resolveDate": 1767243600,
     "verifierSource": "NOAA Coral Reef Watch",
-    "range": [0, 100],
+    "range": [
+      0,
+      100
+    ],
     "contracts": []
   },
   "3": {
@@ -28,7 +46,10 @@
     "tag": "tech",
     "resolveDate": 1748750400,
     "verifierSource": "UNEP Progress Report",
-    "range": [1000, 50000],
+    "range": [
+      1000,
+      50000
+    ],
     "contracts": []
   }
 }
