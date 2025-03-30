@@ -96,6 +96,14 @@
         "guessValue": 17,
         "betId": "0",
         "createdAt": "2025-03-30T09:12:10.828Z"
+      },
+      {
+        "userId": "anha",
+        "price": null,
+        "numContracts": "4",
+        "guessValue": "73",
+        "betId": "0",
+        "createdAt": "2025-03-30T15:22:03.777Z"
       }
     ]
   },
@@ -116,11 +124,27 @@
         "guessValue": "53",
         "betId": "1",
         "createdAt": "2025-03-30T08:58:02.393Z"
+      },
+      {
+        "userId": "anha",
+        "price": null,
+        "numContracts": "1",
+        "guessValue": "265",
+        "betId": "1",
+        "createdAt": "2025-03-30T15:25:21.723Z"
+      },
+      {
+        "userId": "anha",
+        "price": null,
+        "numContracts": "1",
+        "guessValue": "216",
+        "betId": "1",
+        "createdAt": "2025-03-30T15:25:46.227Z"
       }
     ]
   },
   "2": {
-    "title": "What % of global coral reegs will experience severe bleaching in 2025?",
+    "title": "What % of global coral reefs will experience severe bleaching in 2025?",
     "tag": "ecological",
     "resolveDate": 1767243600,
     "verifierSource": "NOAA Coral Reef Watch",
