@@ -15107,6 +15107,30 @@
         "guessValue": "216",
         "betId": "1",
         "createdAt": "2025-03-30T15:25:46.227Z"
+      },
+      {
+        "userId": "anha",
+        "price": null,
+        "numContracts": "5",
+        "guessValue": "38",
+        "betId": "0",
+        "createdAt": "2025-03-30T15:40:23.183Z"
+      },
+      {
+        "userId": "anha",
+        "price": null,
+        "numContracts": "3",
+        "guessValue": "72",
+        "betId": "0",
+        "createdAt": "2025-03-30T16:08:35.847Z"
+      },
+      {
+        "userId": "anha",
+        "price": null,
+        "numContracts": "40",
+        "guessValue": "74",
+        "betId": "0",
+        "createdAt": "2025-03-30T16:37:27.822Z"
       }
     ]
   }
