@@ -148,7 +148,11 @@ app.get('/shop', (req, res) => {
 })
 
 app.get('/dashboard', (req, res) => {
-    res.render('dashboard')
+    res.render('dashboard', {
+        blindcards: getBlindBets(),
+        yesnocards: getYesNoBets(),
+        user: req.session.username
+    })
 })
 /////////////////////////////////////////////////////////////////////
 //////////////////////// USER HANDLING STUFF ////////////////////////

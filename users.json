@@ -488,6 +488,62 @@
         "guessValue": 17,
         "betId": "0",
         "createdAt": "2025-03-30T09:12:10.828Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": "100",
+        "guessValue": "73",
+        "betId": "2",
+        "createdAt": "2025-03-30T09:13:57.733Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": "100",
+        "guessValue": "25",
+        "betId": "2",
+        "createdAt": "2025-03-30T09:14:01.494Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": "3",
+        "guessValue": "52",
+        "betId": "2",
+        "createdAt": "2025-03-30T09:14:14.317Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": "3",
+        "guessValue": "55",
+        "betId": "2",
+        "createdAt": "2025-03-30T09:14:22.103Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": "3",
+        "guessValue": "57",
+        "betId": "2",
+        "createdAt": "2025-03-30T09:14:24.875Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": "3",
+        "guessValue": "49",
+        "betId": "2",
+        "createdAt": "2025-03-30T09:14:29.477Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": "3",
+        "guessValue": "46",
+        "betId": "2",
+        "createdAt": "2025-03-30T09:14:35.325Z"
       }
     ]
   },

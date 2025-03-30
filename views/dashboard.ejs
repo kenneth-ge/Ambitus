@@ -1,16 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/d3-array"></script>    
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambitus | Climate Markets</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2e8b57;
+            --secondary: #2196F3;
+            --accent: #4CAF50;
+            --dark: #1B5E20;
+            --light: #E8F5E9;
+            --success: #4CAF50;
+            --danger: #F44336;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background: var(--gradient);
+            color: white;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: rgba(50, 50, 50, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            border-bottom-color: white;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .market-card {
+            backdrop-filter: blur(25px);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            position: relative; /* Required for positioning the circle */
+            overflow: visible; /* Ensures the circle isn't clipped */
+        }
+
+        .market-card::after {
+             content: "";
+             position: absolute;
+             top: 12px;
+             right: 12px;
+             width: 16px;
+             height: 16px;
+             background: rgba(46, 139, 87, 0.3); /* Match your primary color */
+             border-radius: 50%;
+             opacity: 0.3;
+             z-index: 2;
+        }
+
+      /* Filter Styles */
+      .category-filters {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            background: rgba(163, 201, 159, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: var(--success);
+            border-color: var(--success);
+        }
+        
+        .market-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .market-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+        }
+
+        /* New Slider Styles */
+        .slider-container {
+            margin: 1.5rem 0;
+        }
+
+        .confidence-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+        }
+
+        .confidence-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            border: 2px solid var(--primary);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 0.5rem;
+        }
+
+        /* Choice Buttons */
+        .choice-buttons {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .choice-btn {
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+        }
+
+        .choice-btn.yes {
+            border: 1px solid var(--success);
+        }
+
+        .choice-btn.no {
+            border: 1px solid var(--danger);
+        }
+
+        .choice-btn:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .verification {
+            margin-top: 1.5rem;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 1);
+        }
+
+        .bet-input {
+            width: 100%;
+            padding-top: 0.8rem;
+            padding-bottom: 0.8rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+                /* Toast notification styling */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+            color: white;
+            padding: 20px 40px;
+            border-radius: 10px;
+            font-size: 18px;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1000;
+            transition: opacity 0.5s, visibility 0.5s;
+            backdrop-filter: blur(10px); /* Apply blur effect to background */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Shadow for a 3D effect */
+        }
+
+        /* To make the toast visible */
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+
+        .connect-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .connect-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .histogramBox {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+
+        .outcome {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            margin: 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .outcome.total {
+            background: linear-gradient(135deg, rgba(138, 138, 138, 0.1) 0%, rgba(255, 255, 255, 0.3) 100%);
+            border: 1px solid var(--light);
+        }
+
+        .outcome.yes {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(255, 255, 255, 0.3) 100%);
+            border: 1px solid var(--success);
+        }
+
+        .outcome.no {
+            background: linear-gradient(135deg, rgba(244, 67, 54, 0.1) 0%, rgba(255, 255, 255, 0.3) 100%);
+            border: 1px solid var(--danger);
+        }
+    </style>
 <body>
-    <canvas id="histogramChart"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-array"></script> 
+
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-seedling"></i>
+            Ambitus
+        </div>
+        <div class="nav-links">
+            <a href="#">Markets</a>
+            <a href="#">News</a>
+            <a href="#">Portfolio</a>
+            <a href="#">Shop</a>
+        </div>
+        <div class="user-actions">
+            <button class="connect-btn">
+                <i class="fas fa-wallet"></i> Connect Wallet
+            </button>
+        </div>
+        <% if (user) { %>
+            <span class="username">Welcome, <%= user %></span>
+            <a href="/logout" class="connect-btn">Sign Out</a>
+        <% } else { %>
+            <a href="/login?redirect=/blind" class="connect-btn">Sign In</a>
+        <% } %>
+    </nav>
+
+    <div class="category-filters">
+        <button class="filter-btn active" data-category="all">All</button>
+        <button class="filter-btn" data-category="agreements">Agreements</button>
+        <button class="filter-btn" data-category="policy">Policy</button>
+        <button class="filter-btn" data-category="corporate">Corporate</button>
+        <button class="filter-btn" data-category="environment">Environment</button>
+        <button class="filter-btn" data-category="technology">Tech</button>
+        <button class="filter-btn" data-category="financial">Financial</button>
+    </div>
 
     <script>
-        async function load(){
-            const response = await fetch('/blind/getdata_real?betId=1');
-            console.log(response)
+        // Function to implement Scott's Rule manually
+        function scottsRule(data) {
+            // Step 1: Calculate the standard deviation
+            const mean = d3.mean(data);
+            const variance = d3.mean(data, d => Math.pow(d - mean, 2));
+            const stdDev = Math.sqrt(variance); // Standard deviation
+
+            // Step 2: Calculate the range of the data (max - min)
+            const range = d3.max(data) - d3.min(data);
+
+            // Step 3: Calculate the bin width using Scott's Rule formula
+            const binWidth = (3.5 * stdDev) / Math.pow(data.length, 1 / 3);
+
+            // Step 4: Calculate the number of bins
+            const binCount = Math.ceil(range / binWidth);
+
+            return binCount;
+        }
+
+        async function loadChart(key){
+            let id = `histogramChart${key}`
+            const response = await fetch(`/blind/getdata_real?betId=${key}`);
             const data = (await response.json());
-            console.log(data)
 
             // Convert to expanded dataset (repeat values by frequency)
             const rawData = data.flatMap(({ value, frequency }) =>
@@ -19,7 +371,10 @@
 
             // Use D3 to automatically bin data
             // Calculate the number of bins using Scott's Rule
-            const binCount = Math.max(10, d3.thresholdScott(rawData)); // Ensures at least 10 bins
+            const binCount = Math.max(10, scottsRule(rawData)); // Ensures at least 10 bins
+
+            console.log('scottsRule(rawData)', scottsRule(rawData))
+            console.log('binCount', binCount)
 
             const binGenerator = d3.bin()
                 .domain([Math.min(...rawData), Math.max(...rawData)]) // Auto-detect min/max
@@ -32,7 +387,7 @@
             const frequencies = bins.map(bin => bin.length);
 
             // Draw histogram with Chart.js
-            const ctx = document.getElementById('histogramChart').getContext('2d');
+            const ctx = document.getElementById(id).getContext('2d');
 
             new Chart(ctx, {
                 type: 'bar',
@@ -54,7 +409,69 @@
                 }
             });
         }
-
-        load()
     </script>
+
+    <div class="container">
+        <% for (let key in blindcards) { %> 
+            <!-- Loop through the dictionary keys
+             
+           /* 
+            * title,
+            * tag,
+            * resolveDate,
+            * verifierSource,
+            * seedPrice,
+            * range,
+            * contracts: []
+            */
+
+            -->
+            <!-- Card 1 -->
+            <div class="market-card" data-category="<%= blindcards[key].tag %>">
+                <h2 class="market-title"><%= blindcards[key].title %></h2>
+                <div class="market-meta">
+                    <span class="market-type"><%= blindcards[key].tagTitle %></span>
+                    <span><i class="far fa-clock"></i> <%= blindcards[key].humanReadableEndDate %></span>
+                </div>
+                <div class="histogramBox">
+                    <canvas id="histogramChart<%=key%>"></canvas>
+                    <script>
+                        loadChart('<%=key%>')
+                    </script>
+                </div>
+            </div>
+        <% }; %>
+        <% for (let key in yesnocards) { %> <!-- Loop through the dictionary keys -->
+            <div class="market-card" data-category="<%= yesnocards[key].tag %>">
+                <h2 class="market-title"><%= yesnocards[key].title %></h2>
+                <div class="market-meta">
+                    <span class="market-type"><%= yesnocards[key].tagTitle %></span>
+                    <span><i class="far fa-clock"></i> Resolves: <%= yesnocards[key].humanReadableEndDate %></span>
+                </div>
+                <div class="outcomes">
+                    <div class="outcome total">
+                        <div class="outcome-header">
+                            <span class="outcome-label">OVERALL PROBABILITY</span>
+                            <span class="probability"><%= Math.round((parseInt(yesnocards[key].yesprob) + parseInt(yesnocards[key].noprob)) / 2) %>%</span>
+                        </div>
+                    </div>
+                    <div class="outcome yes">
+                        <div class="outcome-header">
+                            <span class="outcome-label">LATEST YES</span>
+                            <span class="probability"><%= yesnocards[key].yesprob %>%</span>
+                        </div>
+                    </div>
+                    <div class="outcome no">
+                        <div class="outcome-header">
+                            <span class="outcome-label">LATEST NO</span>
+                            <span class="probability"><%= yesnocards[key].noprob %>%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="verification" style="margin-top: 1rem; font-size: 0.8rem;">
+                    Source: <%= yesnocards[key].verifierSource %>
+                </div>
+            </div>
+        <% }; %>
 </body>
+</html>
