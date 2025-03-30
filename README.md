@@ -1,6 +1,8 @@
 # Ambitus
 
-A climate prediction market, fueling trustworthy data driven decisions for academics
+A novel climate prediction market. Get paid to bet, while fueling trustworthy data driven decisions for academics. 
+
+![Screenshot From 2025-03-30 07-10-55](https://github.com/user-attachments/assets/1504a00b-2a6a-4005-85e5-3bbe2428c06e)
 
 ## Inspiration
 
