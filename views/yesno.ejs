@@ -318,6 +318,19 @@
             gap: 15px;
         }
 
+        .logo a {
+            color: white;        /* Set text color to white */
+            font-weight: bold;   /* Make the link bold */
+            text-decoration: none; /* Remove underline */
+        }
+
+        .logo a:hover,
+        .logo a:focus,
+        .logo a:active {
+            color: white;        /* Keep the color white even on hover/focus/active */
+            text-decoration: none; /* Keep the no underline even on hover/focus/active */
+        }
+
         /* Toast notification styling */
         .toast {
             position: fixed;
@@ -432,9 +445,9 @@
         </div>
         <div class="nav-links">
             <a href="#">Markets</a>
-            <a href="#">News</a>
-            <a href="#">Portfolio</a>
-            <a href="#">Shop</a>
+            <a href="/">News</a>
+            <a href="/dashboard">Portfolio</a>
+            <a href="/shop">Shop</a>
         </div>
         <div class="user-actions">
             <button class="connect-btn">

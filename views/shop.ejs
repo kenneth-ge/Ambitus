@@ -73,6 +73,100 @@
             margin-top: 1rem;
             cursor: pointer;
         }
+
+        /* Nature-inspired Navigation */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            min-height: 60px; 
+        }
+
+        .nav-links {
+            display: flex; 
+            gap: 2rem; 
+            white-space: nowrap; 
+            flex-wrap: nowrap; 
+        } 
+        
+        .logo {
+            font-weight: 800;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--light);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .logo a {
+            color: white;        /* Set text color to white */
+            font-weight: bold;   /* Make the link bold */
+            text-decoration: none; /* Remove underline */
+        }
+
+        .logo a:hover,
+        .logo a:focus,
+        .logo a:active {
+            color: white;        /* Keep the color white even on hover/focus/active */
+            text-decoration: none; /* Keep the no underline even on hover/focus/active */
+        }
+        
+        
+        .nav-links a:hover {
+            border-bottom-color: white;
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        .carbon-footprint {
+            background-color: rgba(255,255,255,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .connect-btn {
+            background-color: white;
+            color: var(--primary);
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .connect-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body>
@@ -80,7 +174,7 @@
         <!-- Simple navigation for static page -->
         <div class="logo">
             <i class="fas fa-seedling"></i>
-            Ambitus Shop
+            <a href="/">Ambitus</a>             
         </div>
         <div class="nav-links">
             <a href="#"><i class="fas fa-coins"></i> 4,800 Points</a>

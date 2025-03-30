@@ -69,6 +69,19 @@
             border-bottom-color: white;
         }
 
+        .logo a {
+            color: white;        /* Set text color to white */
+            font-weight: bold;   /* Make the link bold */
+            text-decoration: none; /* Remove underline */
+        }
+
+        .logo a:hover,
+        .logo a:focus,
+        .logo a:active {
+            color: white;        /* Keep the color white even on hover/focus/active */
+            text-decoration: none; /* Keep the no underline even on hover/focus/active */
+        }
+
         .user-actions {
             display: flex;
             align-items: center;
@@ -281,13 +294,13 @@
     <nav class="navbar">
         <div class="logo">
             <i class="fas fa-seedling"></i>
-            Ambitus
+            <a href="/">Ambitus</a>
         </div>
         <div class="nav-links">
             <a href="#">Markets</a>
-            <a href="#">News</a>
-            <a href="#">Portfolio</a>
-            <a href="#">Shop</a>
+            <a href="/">News</a>
+            <a href="/dashboard">Portfolio</a>
+            <a href="/shop">Shop</a>
         </div>
         <div class="user-actions">
             <button class="connect-btn">
@@ -451,7 +464,7 @@
                     <span class="market-type"><%= cards[key].tagTitle %></span>
                     <span><i class="far fa-clock"></i> <%= cards[key].humanReadableEndDate %></span>
                 </div>
-                <div class="histogramBox">
+                <div class="histogramBox" style="display: none;">
                     <canvas id="histogramChart<%=key%>"></canvas>
                     <script>
                         loadChart('<%=key%>')
