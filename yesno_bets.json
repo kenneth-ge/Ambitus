@@ -134,6 +134,27 @@
         "yesNo": "yes",
         "betId": "0",
         "createdAt": "2025-03-30T02:46:11.028Z"
+      },
+      {
+        "userId": "anha",
+        "price": 75,
+        "yesNo": "yes",
+        "betId": "0",
+        "createdAt": "2025-03-30T07:25:21.769Z"
+      },
+      {
+        "userId": "anha",
+        "price": 75,
+        "yesNo": "yes",
+        "betId": "0",
+        "createdAt": "2025-03-30T07:25:21.798Z"
+      },
+      {
+        "userId": "anha",
+        "price": 75,
+        "yesNo": "yes",
+        "betId": "0",
+        "createdAt": "2025-03-30T07:25:21.841Z"
       }
     ],
     "noOrders": [
@@ -304,6 +325,13 @@
         "yesNo": "no",
         "betId": "3",
         "createdAt": "2025-03-30T03:55:38.442Z"
+      },
+      {
+        "userId": "kenny",
+        "price": "10",
+        "yesNo": "no",
+        "betId": "3",
+        "createdAt": "2025-03-30T04:00:54.100Z"
       }
     ]
   },
@@ -316,7 +344,15 @@
     "verifierSource": "COP30 Final Text",
     "contracts": [],
     "yesOrders": [],
-    "noOrders": []
+    "noOrders": [
+      {
+        "userId": "kenny",
+        "price": "5",
+        "yesNo": "no",
+        "betId": "4",
+        "createdAt": "2025-03-30T04:00:02.226Z"
+      }
+    ]
   },
   "5": {
     "title": "Will India's renewable energy capacity surpass 200 GW by June 2025?",

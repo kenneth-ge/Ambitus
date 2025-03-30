@@ -15,6 +15,16 @@ const {
 } = require('./yesno_contracts');
 
 const {
+    addBet: addBlindBet,
+    addContract: addBlindContract,
+    getHistogramChart,
+    saveData: saveBlindData,
+    loadData: loadBlindData,
+    resolveBet: resolveBlindBet,
+    getBets: getBlindBets
+} = require('./blind_bets')
+
+const {
     addUser,
     enrichenUser,
     users
@@ -116,7 +126,7 @@ app.get('/logout', (req, res) => {
 });
 
 //////////////////////////////////////////////////////////////////////
-/////////////////////////// YES & NO PAGES ///////////////////////////
+/////////////////////////// BET DATA PAGES ///////////////////////////
 //////////////////////////////////////////////////////////////////////
 
 app.get('/yesno', (req, res) => {
@@ -127,7 +137,18 @@ app.get('/yesno', (req, res) => {
 })
 
 app.get('/blind', (req, res) => {
-    res.render('blind')
+    res.render('blind', {
+        cards: getBlindBets(),
+        user: req.session.username
+    })
+})
+
+app.get('/shop', (req, res) => {
+    res.render('shop')
+})
+
+app.get('/dashboard', (req, res) => {
+    res.render('dashboard')
 })
 /////////////////////////////////////////////////////////////////////
 //////////////////////// USER HANDLING STUFF ////////////////////////
@@ -194,6 +215,61 @@ app.get('/yesno/save-contracts', (req, res) => {
     saveYesNoData();
     res.json({ message: 'Contracts saved manually' });
 });
+
+/////////////////////////////////////////////////////////////////////
+//////////////////////// BLIND BETTING STUFF ////////////////////////
+/////////////////////////////////////////////////////////////////////
+app.post('/blind/addBet', (req, res) => {
+    let { betId, title, tag, tagTitle, resolveDate, verifierSource, seedPrice, range } = req.body
+ 
+    res.json(addBlindBet(betId, title, tag, tagTitle, resolveDate, verifierSource, seedPrice, range))
+})
+
+app.post('/blind/addContract', (req, res) => {
+    const { betId, numContracts, guessValue } = req.body;
+
+    console.log(req.session.username, betId, numContracts, guessValue)
+
+    if (!req.session.username || !betId || !numContracts || !guessValue) {
+        return res.status(400).json({ reason: 'Missing or invalid data' });
+    }
+
+    let result = addBlindContract(req.session.username, betId, numContracts, guessValue);
+
+    res.status(201).json(result);
+});
+
+app.post('/blind/addContract_Internal', (req, res) => {
+    const { userId, betId, numContracts, guessValue } = req.body;
+
+    console.log(userId, betId, numContracts, guessValue)
+
+    if (!userId || !betId || !numContracts || !guessValue) {
+        return res.status(400).json({ reason: 'Missing or invalid data' });
+    }
+
+    let result = addBlindContract(userId, betId, numContracts, guessValue);
+
+    res.status(201).json(result);
+});
+
+app.get('/blind/getdata', (req, res) => {
+    let { betId } = req.query
+
+    res.json(getHistogramChart(betId))
+})
+
+app.get('/blind/getdata_real', (req, res) => {
+    let { betId } = req.query
+
+    res.json(getHistogramChart(betId, false))
+})
+
+app.post('/blind/resolve', (req, res) => {
+    let { betId, trueVal } = req.body
+
+    res.json(resolveBlindBet(betId, trueVal))
+})
 
 // Start the server
 app.listen(port, () => {

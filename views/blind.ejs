@@ -42,6 +42,39 @@
             z-index: 100;
         }
 
+        .logo {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            border-bottom-color: white;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
         .container {
             max-width: 1200px;
             margin: 2rem auto;
@@ -77,6 +110,32 @@
              z-index: 2;
 }
 
+      /* Filter Styles */
+      .category-filters {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            background: rgba(163, 201, 159, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: var(--success);
+            border-color: var(--success);
+        }
+
+
+        
 
         .market-title {
             font-size: 1.2rem;
@@ -128,7 +187,7 @@
         /* Choice Buttons */
         .choice-buttons {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 1rem;
             margin-top: 1rem;
         }
@@ -164,8 +223,15 @@
             color: rgba(255, 255, 255, 0.6);
         }
 
-
-        /* Existing filter and other styles remain unchanged */
+        .bet-input {
+            width: 100%;
+            padding-top: 0.8rem;
+            padding-bottom: 0.8rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
     </style>
 <body>
     <nav class="navbar">
@@ -184,38 +250,75 @@
                 <i class="fas fa-wallet"></i> Connect Wallet
             </button>
         </div>
+        
     </nav>
 
+    <div class="category-filters">
+        <button class="filter-btn active" data-category="all">All</button>
+        <button class="filter-btn" data-category="agreements">Agreements</button>
+        <button class="filter-btn" data-category="policy">Policy</button>
+        <button class="filter-btn" data-category="corporate">Corporate</button>
+        <button class="filter-btn" data-category="environment">Environment</button>
+        <button class="filter-btn" data-category="technology">Tech</button>
+        <button class="filter-btn" data-category="financial">Financial</button>
+    </div>
+
+    <script>
+        function placeBet(key){
+
+        }
+    </script>
+
     <div class="container">
-        <!-- Card 1 -->
-        <div class="market-card" data-category="policy">
-            <h2 class="market-title">US Offshore Drilling Ban by Dec 2025?</h2>
-            <div class="market-meta">
-                <span class="market-type">Policy</span>
-                <span><i class="far fa-clock"></i> Dec 2025</span>
-            </div>
-            <div class="slider-container">
-                <input type="range" class="confidence-slider" min="0" max="100" value="50">
-                <div class="slider-labels">
-                    <span>Less Confident</span>
-                    <span>More Confident</span>
+        <% for (let key in cards) { %> 
+            <!-- Loop through the dictionary keys
+             
+           /* 
+            * title,
+            * tag,
+            * resolveDate,
+            * verifierSource,
+            * seedPrice,
+            * range,
+            * contracts: []
+            */
+
+            -->
+            <!-- Card 1 -->
+            <div class="market-card" data-category="<%= cards[key].tag %>">
+                <h2 class="market-title"><%= cards[key].title %></h2>
+                <div class="market-meta">
+                    <span class="market-type"><%= cards[key].tagTitle %></span>
+                    <span><i class="far fa-clock"></i> <%= cards[key].humanReadableEndDate %></span>
+                </div>
+                <div class="slider-container">
+                    <input type="range" class="confidence-slider" min="<%= cards[key].range[0] %>" max="<%= cards[key].range[1] %>" value="50"
+                    oninput="document.getElementById('estimate<%=key%>').value = this.value">
+                    <div class="slider-labels">
+                        <span><%= cards[key].range[0] %></span>
+                        <span><%= cards[key].range[1] %></span>
+                    </div>
+                </div>
+                <label for="numcontracts">Estimate: </label>
+                <input type="number" class="bet-input" placeholder="Your Estimate" id="estimate<%=key%>">
+                <br>
+                <label for="numcontracts">Num Contracts: </label>
+                <input type="number" class="bet-input" placeholder="Number of Contracts" id="numcontracts<%=key%>">
+                <div class="choice-buttons">
+                    <button class="choice-btn yes" onclick="placeBet('<%=key%>')">Place Bet</button>
+                </div>
+                <div class="verification">
+                    Source: <%= cards[key].verifierSource %>
                 </div>
             </div>
-            <div class="choice-buttons">
-                <button class="choice-btn yes">YES</button>
-                <button class="choice-btn no">NO</button>
-            </div>
-            <div class="verification">
-                Source: U.S. Congress Bills Database
-            </div>
-        </div>
+        <% }; %>
 
         <!-- Card 2 -->
-        <div class="market-card" data-category="technology">
-            <h2 class="market-title">Will hydrogen fuel cell vehicles surpass 1M global sales by June 2025?</h2>
+        <div class="market-card" data-category="environment">
+            <h2 class="market-title">How many catastrophic fire danger days will Australia experience in 2025?</h2>
             <div class="market-meta">
-                <span class="market-type">Technology Adoption</span>
-                <span><i class="far fa-clock"></i> June 2025</span>
+                <span class="market-type">Extreme Weather</span>
+                <span><i class="far fa-clock"></i> January 2026</span>
             </div>
             <div class="slider-container">
                 <input type="range" class="confidence-slider" min="0" max="100" value="50">
@@ -229,9 +332,33 @@
                 <button class="choice-btn no">NO</button>
             </div>
             <div class="verification">
-                Source: UNEP Progress Report
+                Source: Australia Bureau of Meteorology
             </div>
-        </div>
+        </div> 
+        
+        <!-- Card 3-->
+        <div class="market-card" data-category="environment">
+            <h2 class="market-title">How many named storms will the 2025 Atlantic Hurricane Season Produce?</h2>
+            <div class="market-meta">
+                <span class="market-type">Extreme Weather</span>
+                <span><i class="far fa-clock"></i> November 2025</span>
+            </div>
+            <div class="slider-container">
+                <input type="range" class="confidence-slider" min="0" max="100" value="50">
+                <div class="slider-labels">
+                    <span>Less Confident</span>
+                    <span>More Confident</span>
+                </div>
+            </div>
+            <div class="choice-buttons">
+                <button class="choice-btn yes">YES</button>
+                <button class="choice-btn no">NO</button>
+            </div>
+            <div class="verification">
+                Source <!--- could replace "Source" w/emoji-->: NOAA Seasonal Outlook
+            </div>
+        </div>"
+
         
     <script>
         // Slider interaction

@@ -1,0 +1,177 @@
+html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambitus | Climate Markets</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2e8b57;
+            --secondary: #2196F3;
+            --accent: #4CAF50;
+            --dark: #1B5E20;
+            --light: #E8F5E9;
+            --success: #4CAF50;
+            --danger: #F44336;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        .shop-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .points-balance {
+            background: rgba(46, 139, 87, 0.15);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 1rem 0;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .product-points {
+            color: var(--success);
+            font-weight: 600;
+            margin: 0.5rem 0;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .discounted-price {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .redeem-btn {
+            width: 100%;
+            margin-top: 1rem;
+            background: var(--success);
+            color: white;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .redeem-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <!-- Your existing navigation bar code -->
+    </nav>
+
+    <div class="shop-container">
+        <div class="points-balance">
+            <h2><i class="fas fa-coins"></i> Your Points: <%= user.points %></h2>
+            <p>Redeem your prediction rewards for sustainable products</p>
+        </div>
+
+        <div class="product-grid">
+            <!-- Product 1 -->
+            <div class="product-card">
+                <img src="/images/bamboo-phone-case.jpg" alt="Bamboo Phone Case" class="product-image">
+                <h3>Eco Bamboo Phone Case</h3>
+                <div class="product-points">
+                    <i class="fas fa-leaf"></i> 2,500 Points
+                </div>
+                <div class="price-container">
+                    <span class="original-price">$49.99</span>
+                    <span class="discounted-price">FREE</span>
+                </div>
+                <button class="redeem-btn" <%= user.points >= 2500 ? '' : 'disabled' %>>
+                    Redeem Now
+                </button>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card">
+                <img src="/images/solar-charger.jpg" alt="Solar Charger" class="product-image">
+                <h3>Portable Solar Charger</h3>
+                <div class="product-points">
+                    <i class="fas fa-leaf"></i> 5,800 Points
+                </div>
+                <div class="price-container">
+                    <span class="original-price">$129.99</span>
+                    <span class="discounted-price">FREE</span>
+                </div>
+                <button class="redeem-btn" <%= user.points >= 5800 ? '' : 'disabled' %>>
+                    Redeem Now
+                </button>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card">
+                <img src="/images/coffee-bag.jpg" alt="Ethical Coffee" class="product-image">
+                <h3>Organic Ethiopian Coffee</h3>
+                <div class="product-points">
+                    <i class="fas fa-leaf"></i> 1,200 Points
+                </div>
+                <div class="price-container">
+                    <span class="original-price">$24.99</span>
+                    <span class="discounted-price">FREE</span>
+                </div>
+                <button class="redeem-btn" <%= user.points >= 1200 ? '' : 'disabled' %>>
+                    Redeem Now
+                </button>
+            </div>
+
+            <!-- Add more products following the same structure -->
+        </div>
+    </div>
+
+    <script>
+        // Add any interactive features you need
+        document.querySelectorAll('.redeem-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const productName = this.closest('.product-card').querySelector('h3').textContent;
+                if(confirm(`Confirm redemption for ${productName}?`)) {
+                    // Handle redemption logic
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-array"></script>    
+</head>
+<body>
+    <canvas id="histogramChart"></canvas>
+
+    <script>
+        async function load(){
+            const response = await fetch('/blind/getdata_real?betId=0');
+            console.log(response)
+            const data = (await response.json());
+            console.log(data)
+
+            // Convert to expanded dataset (repeat values by frequency)
+            const rawData = data.flatMap(({ value, frequency }) =>
+                Array(frequency).fill(value)
+            );
+
+            // Use D3 to automatically bin data
+            const binGenerator = d3.bin()
+                .domain([Math.min(...rawData), Math.max(...rawData)]) // Auto-detect min/max
+                .thresholds(10)  // Scott's Rule
+                .value(d => d);
+            const bins = binGenerator(rawData);
+
+            // Extract labels (bin ranges) and frequencies
+            const labels = bins.map(bin => `${bin.x0}-${bin.x1}`);
+            const frequencies = bins.map(bin => bin.length);
+
+            // Draw histogram with Chart.js
+            const ctx = document.getElementById('histogramChart').getContext('2d');
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Frequency',
+                    data: frequencies,
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+                },
+                options: {
+                scales: {
+                    x: { title: { display: true, text: 'Value Range' } },
+                    y: { title: { display: true, text: 'Frequency' }, beginAtZero: true }
+                }
+                }
+            });
+        }
+
+        load()
+    </script>
+</body>

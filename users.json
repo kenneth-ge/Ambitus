@@ -1,6 +1,6 @@
 {
   "kenny": {
-    "balance": 10,
+    "balance": null,
     "bids": [
       {
         "userId": "kenny",
@@ -148,6 +148,20 @@
         "yesNo": "no",
         "betId": "3",
         "createdAt": "2025-03-30T03:55:38.442Z"
+      },
+      {
+        "userId": "kenny",
+        "price": "5",
+        "yesNo": "no",
+        "betId": "4",
+        "createdAt": "2025-03-30T04:00:02.226Z"
+      },
+      {
+        "userId": "kenny",
+        "price": "10",
+        "yesNo": "no",
+        "betId": "3",
+        "createdAt": "2025-03-30T04:00:54.100Z"
       }
     ],
     "boughtContracts": [
@@ -290,7 +304,122 @@
         "yesNo": "no",
         "betId": "2",
         "createdAt": "2025-03-30T03:54:38.763Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": 1,
+        "guessValue": 10,
+        "betId": "0",
+        "createdAt": "2025-03-30T08:09:42.640Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": 4,
+        "guessValue": 11,
+        "betId": "0",
+        "createdAt": "2025-03-30T08:10:00.728Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": 15,
+        "guessValue": 12,
+        "betId": "0",
+        "createdAt": "2025-03-30T08:10:15.680Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": 74,
+        "guessValue": 13,
+        "betId": "0",
+        "createdAt": "2025-03-30T08:10:23.350Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": 149,
+        "guessValue": 14,
+        "betId": "0",
+        "createdAt": "2025-03-30T08:10:36.661Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": 217,
+        "guessValue": 15,
+        "betId": "0",
+        "createdAt": "2025-03-30T08:10:44.853Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": 275,
+        "guessValue": 16,
+        "betId": "0",
+        "createdAt": "2025-03-30T08:10:56.112Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": 148,
+        "guessValue": 17,
+        "betId": "0",
+        "createdAt": "2025-03-30T08:11:10.042Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": 92,
+        "guessValue": 18,
+        "betId": "0",
+        "createdAt": "2025-03-30T08:11:19.259Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": 22,
+        "guessValue": 19,
+        "betId": "0",
+        "createdAt": "2025-03-30T08:11:27.042Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": 3,
+        "guessValue": 20,
+        "betId": "0",
+        "createdAt": "2025-03-30T08:11:37.280Z"
       }
     ]
+  },
+  "anha": {
+    "balance": 1000,
+    "bids": [
+      {
+        "userId": "anha",
+        "price": 75,
+        "yesNo": "yes",
+        "betId": "0",
+        "createdAt": "2025-03-30T07:25:21.769Z"
+      },
+      {
+        "userId": "anha",
+        "price": 75,
+        "yesNo": "yes",
+        "betId": "0",
+        "createdAt": "2025-03-30T07:25:21.798Z"
+      },
+      {
+        "userId": "anha",
+        "price": 75,
+        "yesNo": "yes",
+        "betId": "0",
+        "createdAt": "2025-03-30T07:25:21.841Z"
+      }
+    ],
+    "boughtContracts": []
   }
 }

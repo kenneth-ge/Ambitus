@@ -1,0 +1,34 @@
+{
+  "0": {
+    "title": "How many named storms will the 2025 Atlantic Hurricane Season produce?",
+    "tag": "weather",
+    "resolveDate": 1764478800,
+    "verifierSource": "NOAA Seasonal Outlook",
+    "range": [0, 100],
+    "contracts": []
+  },
+  "1": {
+    "title": "How many catastrophic fire danger days will Australia experience in 2025?",
+    "tag": "weather",
+    "resolveDate": 1767243600,
+    "verifierSource": "Australia Bureau of Meteorology",
+    "range": [0, 365],
+    "contracts": []
+  },
+  "2": {
+    "title": "What % of global coral reegs will experience severe bleaching in 2025?",
+    "tag": "ecological",
+    "resolveDate": 1767243600,
+    "verifierSource": "NOAA Coral Reef Watch",
+    "range": [0, 100],
+    "contracts": []
+  },
+  "3": {
+    "title": "How many Hydrogen fuel cell vehicles will be sold globally between January and June 2025?",
+    "tag": "tech",
+    "resolveDate": 1748750400,
+    "verifierSource": "UNEP Progress Report",
+    "range": [1000, 50000],
+    "contracts": []
+  }
+}

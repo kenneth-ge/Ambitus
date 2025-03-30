@@ -10,6 +10,10 @@ const {
     loadData: loadUserData,
 } = require('./users');
 
+const {
+    formatUnixTimestamp
+} = require('./utils');
+
 // In-memory storage for users and bets
 /* 
  * title,
@@ -17,6 +21,7 @@ const {
  * resolveDate,
  * verifierSource,
  * seedPrice,
+ * range,
  * contracts: []
  */
 let bets = {};
@@ -48,17 +53,21 @@ function saveData() {
 }
 
 // Add a new bet
-function addBet(betId, title, tag, resolveDate, verifierSource, seedPrice) {
-    if (!bets[betId]) {
-        bets[betId] = {
-            title,
-            tag,
-            resolveDate,
-            verifierSource,
-            seedPrice,
-            contracts: []
-        };
-        saveData();
+function addBet(betId, title, tag, tagTitle, resolveDate, verifierSource, seedPrice, range) {
+    bets[betId] = {
+        title,
+        tag,
+        tagTitle,
+        resolveDate,
+        verifierSource,
+        seedPrice,
+        range,
+        contracts: []
+    };
+    saveData();
+
+    return {
+        success: true
     }
 }
 
@@ -117,7 +126,7 @@ function addContract(userId, betId, numContracts, guessValue) {
 }
 
 // Get a histogram chart
-function getHistogramChart(betId) {
+function getHistogramChart(betId, obfuscate=true) {
     // in order to hide any info and prevent
     // leakage, we present only a distribution shape
     // we do this by scaling mean to 0 and range to 1000
@@ -137,35 +146,105 @@ function getHistogramChart(betId) {
 
         values.push({
             value,
-            number
+            frequency: number
         });
     });
 
-    // rescale mean to 0 and range to 1000
-    // Step 1: Calculate the weighted mean
-    const totalSum = values.reduce((sum, { value, number }) => sum + value * number, 0);
-    const totalNum = values.reduce((sum, { number }) => sum + number, 0);
+    let scaledValues = values
+    if(obfuscate){
+        // rescale mean to 0 and range to 1000
+        // Step 1: Calculate the weighted mean
+        const totalSum = values.reduce((sum, { value, frequency }) => sum + value * frequency, 0);
+        const totalNum = values.reduce((sum, { frequency }) => sum + frequency, 0);
 
-    const mean = totalSum / totalNum;
+        const mean = totalSum / totalNum;
 
-    // Step 2: Center the values around the mean
-    const centeredValues = values.map(({ value, number }) => ({ 
-        value: value - mean, 
-        number 
-    }));
+        // Step 2: Center the values around the mean
+        const centeredValues = values.map(({ value, frequency }) => ({ 
+            value: value - mean, 
+            frequency 
+        }));
 
-    // Step 3: Calculate the range (max - min) of the centered values
-    const min = Math.min(...centeredValues.map(({ value }) => value));
-    const max = Math.max(...centeredValues.map(({ value }) => value));
-    const range = max - min;
+        // Step 3: Calculate the range (max - min) of the centered values
+        const min = Math.min(...centeredValues.map(({ value }) => value));
+        const max = Math.max(...centeredValues.map(({ value }) => value));
+        const range = max - min;
 
-    // Step 4: Rescale the values so that the range is 1000
-    const scaledValues = centeredValues.map(({ value, number }) => ({
-        value: (value - min) * 1000 / range,
-        number
-    }));
+        // Step 4: Rescale the values so that the range is 1000
+        scaledValues = centeredValues.map(({ value, frequency }) => ({
+            value: (value - min) * 1000 / range,
+            frequency
+        }));
+    }
 
     return scaledValues;
+}
+
+function logisticScoring(guess, trueValue, k = 0.2, d = 10) {
+    return 1 / (1 + Math.exp(k * (Math.abs(guess - trueValue) - d)));
+}
+
+function calculatePayouts(guesses, trueValue, prizePool, k = 0.2, d = 10) {
+    // Step 1: Compute weighted scores
+    let weightedScores = guesses.map(({ value, number, userId }) => {
+        let score = logisticScoring(value, trueValue, k, d);
+        return { userId, weightedScore: score * number };
+    });
+
+    // Step 2: Compute total weighted score
+    let totalWeightedScore = weightedScores.reduce((sum, { weightedScore }) => sum + weightedScore, 0);
+
+    // Step 3: Compute payouts
+    let payouts = weightedScores.map(({ userId, weightedScore }) => ({
+        userId,
+        payout: totalWeightedScore > 0 ? (weightedScore / totalWeightedScore) * prizePool : 0
+    }));
+
+    return payouts;
+}
+
+function resolveBet(betId, trueValue){
+    const bet = bets[betId];
+
+    if (!bet) {
+        console.log('Bet not found');
+        return history;
+    }
+
+    let totalPool = 0
+    let values = []
+
+    // Get values
+    bet.contracts.forEach(contract => {
+        let value = contract.guessValue
+        let number = contract.numContracts
+
+        totalPool += contract.price
+
+        values.push({
+            value,
+            number,
+            userId: contract.userId
+        });
+    });
+
+    let payouts = calculatePayouts(values, trueValue, totalPool)
+
+    payouts.forEach(({ userId, payout }) => {
+        console.log(`User ${userId} receives $${payout.toFixed(2)}`);
+        enrichenUser(userId, payout)
+    });    
+}
+
+function getBets(){
+    let ret = structuredClone(bets)
+
+    for (let key in bets) {
+        ret[key].contracts = []
+        ret[key].humanReadableEndDate = formatUnixTimestamp(ret[key].resolveDate)
+    }
+
+    return ret;
 }
 
 // Load data when starting the app
@@ -175,6 +254,8 @@ module.exports = {
     addBet,
     addContract,
     getHistogramChart,
+    resolveBet,
     saveData,
     loadData,
+    getBets
 };
