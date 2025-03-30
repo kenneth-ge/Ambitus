@@ -198,5 +198,93 @@
     "contracts": [],
     "yesOrders": [],
     "noOrders": []
+  },
+  "2": {
+    "title": "Will hydrogen fuel cell vehicles surpass 1M global sales by June 2025?",
+    "tag": "technology",
+    "tagTitle": "Technology Adoption",
+    "resolveDate": 1748750400,
+    "humanReadableEndDate": "Sun, Jun 1, 2025 at 12 AM EDT",
+    "verifierSource": "UNEP Progress Report",
+    "contracts": [],
+    "yesOrders": [],
+    "noOrders": []
+  },
+  "3": {
+    "title": "Will Arctic summer sea ice extent drop below 3M km² in September 2025?",
+    "tag": "environment",
+    "tagTitle": "Environment",
+    "resolveDate": 1756699200,
+    "humanReadableEndDate": "Mon, Sep 1, 2025 at 12 AM EDT",
+    "verifierSource": "NSIDC Satellite Data",
+    "contracts": [],
+    "yesOrders": [],
+    "noOrders": []
+  },
+  "4": {
+    "title": "Will the COP30 agreement include binding targets for fossil fuel phaseouts?",
+    "tag": "agreements",
+    "tagTitle": "International Agreement",
+    "resolveDate": 1765774800,
+    "humanReadableEndDate": "Mon, Dec 15, 2025 at 12 AM EST",
+    "verifierSource": "COP30 Final Text",
+    "contracts": [],
+    "yesOrders": [],
+    "noOrders": []
+  },
+  "5": {
+    "title": "Will India's renewable energy capacity surpass 200 GW by June 2025?",
+    "tag": "technology",
+    "tagTitle": "Technology",
+    "resolveDate": 1748750400,
+    "humanReadableEndDate": "Sun, Jun 1, 2025 at 12 AM EDT",
+    "verifierSource": "Indian Ministry of Power",
+    "contracts": [],
+    "yesOrders": [],
+    "noOrders": []
+  },
+  "6": {
+    "title": "Will Amazon achieve between 90 to 100% renewable energy for operations by June 2025?",
+    "tag": "corporate",
+    "tagTitle": "Corporate Action",
+    "resolveDate": 1748750400,
+    "humanReadableEndDate": "Sun, Jun 1, 2025 at 12 AM EDT",
+    "verifierSource": "Amazon Sustainability Report",
+    "contracts": [],
+    "yesOrders": [],
+    "noOrders": []
+  },
+  "7": {
+    "title": "Will ExxonMobil reduce Scope 3 emissions by 15% by Dec 2025?",
+    "tag": "corporate",
+    "tagTitle": "Corporate Action",
+    "resolveDate": 1764565200,
+    "humanReadableEndDate": "Mon, Dec 1, 2025 at 12 AM EST",
+    "verifierSource": "ExxonMobil ESG Report",
+    "contracts": [],
+    "yesOrders": [],
+    "noOrders": []
+  },
+  "8": {
+    "title": "Will 2025 surpass 2024 as the hottest year on record?",
+    "tag": "environment",
+    "tagTitle": "Environmental Metrics",
+    "resolveDate": 1769749200,
+    "humanReadableEndDate": "Fri, Jan 30, 2026 at 12 AM EST",
+    "verifierSource": "NASA/NOAA Annual Report",
+    "contracts": [],
+    "yesOrders": [],
+    "noOrders": []
+  },
+  "9": {
+    "title": "Will California Carbon Allowance prices average >$40/ton in 2025?",
+    "tag": "policy",
+    "tagTitle": "Policy",
+    "resolveDate": 1767243600,
+    "humanReadableEndDate": "Thu, Jan 1, 2026 at 12 AM EST",
+    "verifierSource": "ICE Futures Data",
+    "contracts": [],
+    "yesOrders": [],
+    "noOrders": []
   }
 }
