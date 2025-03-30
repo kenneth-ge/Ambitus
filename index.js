@@ -119,7 +119,8 @@ app.get('/logout', (req, res) => {
 
 app.get('/yesno', (req, res) => {
     res.render('yesno', {
-        cards: getYesNoBets()
+        cards: getYesNoBets(),
+        user: req.session.username
     })
 })
 
@@ -149,6 +150,25 @@ app.post('/yesno/addBet', (req, res) => {
 
 // Route to add a new contract
 app.post('/yesno/addYesNoBid', (req, res) => {
+    const { betId, price, yesNo, number } = req.body;
+
+    console.log(req.session.username, betId, price, yesNo, number)
+
+    if (!req.session.username || !betId || !price || (yesNo !== 'yes' && yesNo !== 'no') || !number) {
+        return res.status(400).json({ reason: 'Missing or invalid data' });
+    }
+
+    for(let i = 0; i < number; i++){
+        let result = addYesNoBid(req.session.username, betId, price, yesNo);
+
+        if(!result.success)
+            res.status(500, result)
+    }
+    res.status(201).json({success: true});
+});
+
+// Route to add a new contract (internal only for testing)
+app.post('/yesno/addYesNoBid_Internal', (req, res) => {
     const { userId, betId, price, yesNo } = req.body;
 
     if (!userId || !betId || !price || (yesNo !== 'yes' && yesNo !== 'no')) {

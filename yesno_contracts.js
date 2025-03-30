@@ -278,12 +278,6 @@ function getYesNoBets(){
 
         newBet.yesprice = parseInt(bets[key].yesOrders.peek().price)
         newBet.noprice = parseInt(bets[key].noOrders.peek().price)
-    
-        console.log(bets[key].yesOrders)
-        console.log(bets[key].noOrders)
-        console.log(bets[key].noOrders.peek())
-        console.log('newBet.yesprice', newBet.yesprice)
-        console.log('newBet.noprice', newBet.noprice)
 
         returnBets[key] = newBet
     }

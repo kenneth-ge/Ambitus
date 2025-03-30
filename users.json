@@ -50,6 +50,20 @@
         "yesNo": "yes",
         "betId": "0",
         "createdAt": "2025-03-30T01:54:19.480Z"
+      },
+      {
+        "userId": "kenny",
+        "price": 75,
+        "yesNo": "yes",
+        "betId": "0",
+        "createdAt": "2025-03-30T02:13:18.501Z"
+      },
+      {
+        "userId": "kenny",
+        "price": 75,
+        "yesNo": "yes",
+        "betId": "0",
+        "createdAt": "2025-03-30T02:16:44.708Z"
       }
     ],
     "boughtContracts": [

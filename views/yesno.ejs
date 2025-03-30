@@ -256,7 +256,7 @@
         }
 
         .filter-btn {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(163, 201, 159, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: white;
             padding: 0.5rem 1rem;
@@ -275,7 +275,7 @@
             background: var(--card-bg);
             border-radius: 12px;
             padding: 1.5rem;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
             position: sticky;
             top: 100px;
         }
@@ -300,8 +300,6 @@
             transform: translate(-50%, -50%);
             width: 100%;  /* Matches the width of the text */
             height: 120%;  /* Slightly larger than the text to form an elliptical shape */
-            background: rgba(0, 0, 0, 0.5);  /* Semi-transparent black */
-            filter: blur(8px);  /* Apply blur effect */
             z-index: -1;  /* Ensure it's behind the text */
             border-radius: 50%;  /* Optional: Makes the highlight elliptical */
         }
@@ -311,6 +309,30 @@
             gap: 15px;
         }
 
+        /* Toast notification styling */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+            color: white;
+            padding: 20px 40px;
+            border-radius: 10px;
+            font-size: 18px;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1000;
+            transition: opacity 0.5s, visibility 0.5s;
+            backdrop-filter: blur(10px); /* Apply blur effect to background */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Shadow for a 3D effect */
+        }
+
+        /* To make the toast visible */
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+        }
     </style>
 </head>
 <body>
@@ -331,6 +353,12 @@
                 <i class="fas fa-wallet"></i> Connect Wallet
             </button>
         </div>
+        <% if (user) { %>
+            <span class="username">Welcome, <%= user %></span>
+            <a href="/logout" class="connect-btn">Sign Out</a>
+        <% } else { %>
+            <a href="/login" class="connect-btn">Sign In</a>
+        <% } %>
     </nav>
 
     <!-- Category Filters -->
@@ -342,6 +370,59 @@
         <button class="filter-btn" data-category="environment">Environment</button>
         <button class="filter-btn" data-category="technology">Tech</button>
         <button class="filter-btn" data-category="financial">Financial</button>
+    </div>
+
+    <script>
+        function purchase(key, yesNo, price, numberFieldId){
+            console.log('key', key)
+            console.log('yesNo', yesNo)
+            console.log('price', price)
+
+            let strNum = document.getElementById(numberFieldId).value.toString()
+
+            let requestData = {betId: key, yesNo, price, number: strNum}
+
+            // Make the fetch request
+            fetch('/yesno/addYesNoBid', {
+                method: 'POST',            // HTTP method
+                headers: {
+                    'Content-Type': 'application/json'  // Tell the server we're sending JSON data
+                },
+                body: JSON.stringify(requestData)    // Convert the object to JSON string
+            })
+            .then(response => response.json())  // Parse the JSON response from the server
+            .then(data => {
+                if(data.success){
+                    toast('Submitted bid successfully!')
+                }else{
+                    toast('Bid failed due to reason: ' + data.reason)
+                }
+                console.log('Success:', data);    // Handle the success response
+            })
+            .catch(error => {
+                console.error('Error:', error);   // Handle any errors
+            });
+        }
+
+        // Function to show the toast
+        function toast(text) {
+            const toast = document.getElementById('toast');
+            
+            toast.innerHTML = text
+
+            // Add 'show' class to make the toast visible
+            toast.classList.add('show');
+
+            // Automatically hide the toast after 3 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000); // Toast disappears after 3 seconds
+        }
+    </script>
+
+    <!-- Toast container (hidden by default) -->
+    <div id="toast" class="toast">
+        
     </div>
 
     <!-- Main Content -->
@@ -359,16 +440,16 @@
                             <span class="outcome-label">YES</span>
                             <span class="probability"><%= cards[key].yesprob %>%</span>
                         </div>
-                        <input type="number" class="bet-input" placeholder="Enter amount ($)">
-                        <button class="bet-btn">Buy YES $0.<%= cards[key].yesprice %></button>
+                        <input type="number" class="bet-input" placeholder="Number of Contracts" id="numyes<%= key%>">
+                        <button class="bet-btn" onclick="purchase('<%= key%>', 'yes', <%= cards[key].yesprice %>, 'numyes<%= key%>')">Buy YES $0.<%= cards[key].yesprice %></button>
                     </div>
                     <div class="outcome no">
                         <div class="outcome-header">
                             <span class="outcome-label">NO</span>
                             <span class="probability"><%= cards[key].noprob %>%</span>
                         </div>
-                        <input type="number" class="bet-input" placeholder="Enter amount ($)">
-                        <button class="bet-btn">Buy NO $0.<%= cards[key].noprice %></button>
+                        <input type="number" class="bet-input" placeholder="Number of Contracts" id="numno<%= key%>">
+                        <button class="bet-btn" onclick="purchase('<%= key%>', 'no', <%= cards[key].noprice %>, 'numno<%= key%>')">Buy NO $0.<%= cards[key].noprice %></button>
                     </div>
                 </div>
                 <div class="verification" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
