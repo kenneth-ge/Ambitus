@@ -8,7 +8,96 @@
       0,
       100
     ],
-    "contracts": []
+    "contracts": [
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": 1,
+        "guessValue": 10,
+        "betId": "0",
+        "createdAt": "2025-03-30T09:06:27.263Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": 4,
+        "guessValue": 11,
+        "betId": "0",
+        "createdAt": "2025-03-30T09:06:51.890Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": 15,
+        "guessValue": 12,
+        "betId": "0",
+        "createdAt": "2025-03-30T09:06:56.842Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": 74,
+        "guessValue": 13,
+        "betId": "0",
+        "createdAt": "2025-03-30T09:07:00.529Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": 149,
+        "guessValue": 14,
+        "betId": "0",
+        "createdAt": "2025-03-30T09:07:07.514Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": 225,
+        "guessValue": 15,
+        "betId": "0",
+        "createdAt": "2025-03-30T09:07:12.992Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": 275,
+        "guessValue": 16,
+        "betId": "0",
+        "createdAt": "2025-03-30T09:07:18.399Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": 92,
+        "guessValue": 18,
+        "betId": "0",
+        "createdAt": "2025-03-30T09:07:27.867Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": 22,
+        "guessValue": 19,
+        "betId": "0",
+        "createdAt": "2025-03-30T09:07:32.725Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": 3,
+        "guessValue": 20,
+        "betId": "0",
+        "createdAt": "2025-03-30T09:07:36.163Z"
+      },
+      {
+        "userId": "kenny",
+        "price": null,
+        "numContracts": 149,
+        "guessValue": 17,
+        "betId": "0",
+        "createdAt": "2025-03-30T09:12:10.828Z"
+      }
+    ]
   },
   "1": {
     "title": "How many catastrophic fire danger days will Australia experience in 2025?",

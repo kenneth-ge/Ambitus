@@ -351,6 +351,25 @@
             }, 3000); // Toast disappears after 3 seconds
         }
 
+        // Function to implement Scott's Rule manually
+        function scottsRule(data) {
+            // Step 1: Calculate the standard deviation
+            const mean = d3.mean(data);
+            const variance = d3.mean(data, d => Math.pow(d - mean, 2));
+            const stdDev = Math.sqrt(variance); // Standard deviation
+
+            // Step 2: Calculate the range of the data (max - min)
+            const range = d3.max(data) - d3.min(data);
+
+            // Step 3: Calculate the bin width using Scott's Rule formula
+            const binWidth = (3.5 * stdDev) / Math.pow(data.length, 1 / 3);
+
+            // Step 4: Calculate the number of bins
+            const binCount = Math.ceil(range / binWidth);
+
+            return binCount;
+        }
+
         async function loadChart(key){
             let id = `histogramChart${key}`
             const response = await fetch(`/blind/getdata_real?betId=${key}`);
@@ -363,7 +382,10 @@
 
             // Use D3 to automatically bin data
             // Calculate the number of bins using Scott's Rule
-            const binCount = Math.max(10, d3.thresholdScott(rawData)); // Ensures at least 10 bins
+            const binCount = Math.max(10, scottsRule(rawData)); // Ensures at least 10 bins
+
+            console.log('scottsRule(rawData)', scottsRule(rawData))
+            console.log('binCount', binCount)
 
             const binGenerator = d3.bin()
                 .domain([Math.min(...rawData), Math.max(...rawData)]) // Auto-detect min/max
