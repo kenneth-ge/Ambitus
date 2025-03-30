@@ -1,6 +1,6 @@
 {
   "kenny": {
-    "balance": 510,
+    "balance": 10,
     "bids": [
       {
         "userId": "kenny",
@@ -134,6 +134,20 @@
         "yesNo": "yes",
         "betId": "0",
         "createdAt": "2025-03-30T02:46:11.028Z"
+      },
+      {
+        "userId": "kenny",
+        "price": "10",
+        "yesNo": "no",
+        "betId": "3",
+        "createdAt": "2025-03-30T03:55:38.435Z"
+      },
+      {
+        "userId": "kenny",
+        "price": "10",
+        "yesNo": "no",
+        "betId": "3",
+        "createdAt": "2025-03-30T03:55:38.442Z"
       }
     ],
     "boughtContracts": [
@@ -206,6 +220,76 @@
         "yesNo": "no",
         "betId": "0",
         "createdAt": "2025-03-30T01:54:17.080Z"
+      },
+      {
+        "userId": "kenny",
+        "price": "50",
+        "yesNo": "yes",
+        "betId": "2",
+        "createdAt": "2025-03-30T03:54:34.459Z"
+      },
+      {
+        "userId": "kenny",
+        "price": "50",
+        "yesNo": "no",
+        "betId": "2",
+        "createdAt": "2025-03-30T03:54:38.736Z"
+      },
+      {
+        "userId": "kenny",
+        "price": "50",
+        "yesNo": "yes",
+        "betId": "2",
+        "createdAt": "2025-03-30T03:54:34.489Z"
+      },
+      {
+        "userId": "kenny",
+        "price": "50",
+        "yesNo": "no",
+        "betId": "2",
+        "createdAt": "2025-03-30T03:54:38.741Z"
+      },
+      {
+        "userId": "kenny",
+        "price": "50",
+        "yesNo": "yes",
+        "betId": "2",
+        "createdAt": "2025-03-30T03:54:34.483Z"
+      },
+      {
+        "userId": "kenny",
+        "price": "50",
+        "yesNo": "no",
+        "betId": "2",
+        "createdAt": "2025-03-30T03:54:38.752Z"
+      },
+      {
+        "userId": "kenny",
+        "price": "50",
+        "yesNo": "yes",
+        "betId": "2",
+        "createdAt": "2025-03-30T03:54:34.475Z"
+      },
+      {
+        "userId": "kenny",
+        "price": "50",
+        "yesNo": "no",
+        "betId": "2",
+        "createdAt": "2025-03-30T03:54:38.757Z"
+      },
+      {
+        "userId": "kenny",
+        "price": "50",
+        "yesNo": "yes",
+        "betId": "2",
+        "createdAt": "2025-03-30T03:54:34.472Z"
+      },
+      {
+        "userId": "kenny",
+        "price": "50",
+        "yesNo": "no",
+        "betId": "2",
+        "createdAt": "2025-03-30T03:54:38.763Z"
       }
     ]
   }

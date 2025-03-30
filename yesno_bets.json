@@ -206,7 +206,78 @@
     "resolveDate": 1748750400,
     "humanReadableEndDate": "Sun, Jun 1, 2025 at 12 AM EDT",
     "verifierSource": "UNEP Progress Report",
-    "contracts": [],
+    "contracts": [
+      {
+        "userId": "kenny",
+        "price": "50",
+        "yesNo": "yes",
+        "betId": "2",
+        "createdAt": "2025-03-30T03:54:34.459Z"
+      },
+      {
+        "userId": "kenny",
+        "price": "50",
+        "yesNo": "no",
+        "betId": "2",
+        "createdAt": "2025-03-30T03:54:38.736Z"
+      },
+      {
+        "userId": "kenny",
+        "price": "50",
+        "yesNo": "yes",
+        "betId": "2",
+        "createdAt": "2025-03-30T03:54:34.489Z"
+      },
+      {
+        "userId": "kenny",
+        "price": "50",
+        "yesNo": "no",
+        "betId": "2",
+        "createdAt": "2025-03-30T03:54:38.741Z"
+      },
+      {
+        "userId": "kenny",
+        "price": "50",
+        "yesNo": "yes",
+        "betId": "2",
+        "createdAt": "2025-03-30T03:54:34.483Z"
+      },
+      {
+        "userId": "kenny",
+        "price": "50",
+        "yesNo": "no",
+        "betId": "2",
+        "createdAt": "2025-03-30T03:54:38.752Z"
+      },
+      {
+        "userId": "kenny",
+        "price": "50",
+        "yesNo": "yes",
+        "betId": "2",
+        "createdAt": "2025-03-30T03:54:34.475Z"
+      },
+      {
+        "userId": "kenny",
+        "price": "50",
+        "yesNo": "no",
+        "betId": "2",
+        "createdAt": "2025-03-30T03:54:38.757Z"
+      },
+      {
+        "userId": "kenny",
+        "price": "50",
+        "yesNo": "yes",
+        "betId": "2",
+        "createdAt": "2025-03-30T03:54:34.472Z"
+      },
+      {
+        "userId": "kenny",
+        "price": "50",
+        "yesNo": "no",
+        "betId": "2",
+        "createdAt": "2025-03-30T03:54:38.763Z"
+      }
+    ],
     "yesOrders": [],
     "noOrders": []
   },
@@ -219,7 +290,22 @@
     "verifierSource": "NSIDC Satellite Data",
     "contracts": [],
     "yesOrders": [],
-    "noOrders": []
+    "noOrders": [
+      {
+        "userId": "kenny",
+        "price": "10",
+        "yesNo": "no",
+        "betId": "3",
+        "createdAt": "2025-03-30T03:55:38.435Z"
+      },
+      {
+        "userId": "kenny",
+        "price": "10",
+        "yesNo": "no",
+        "betId": "3",
+        "createdAt": "2025-03-30T03:55:38.442Z"
+      }
+    ]
   },
   "4": {
     "title": "Will the COP30 agreement include binding targets for fossil fuel phaseouts?",
