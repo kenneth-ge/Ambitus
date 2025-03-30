@@ -286,6 +286,47 @@
             border: 1px solid #ddd;
             border-radius: 6px;
         }
+
+
+
+        .dropdown {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Dropdown content (hidden by default) */
+        .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        top: 50px;
+        }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+        float: none;
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+        }
+
+        /* Add a grey background color to dropdown links on hover */
+        .dropdown-content a:hover {
+        background-color: #ddd;
+        }
+
+        /* Show the dropdown menu on hover */
+        .dropdown:hover .dropdown-content {
+        display: block;
+        }
     </style>
 <body>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -297,7 +338,15 @@
             <a href="/">Ambitus</a>
         </div>
         <div class="nav-links">
-            <a href="#">Markets</a>
+            <div class="dropdown">
+                <a class="dropbtn">Markets
+                    <i class="fa fa-caret-down"></i>
+                </a>
+                <div class="dropdown-content">
+                    <a href="/yesno">Yes/No Markets</a>
+                    <a href="/blind">Blind Markets</a>
+                </div>
+            </div>
             <a href="/">News</a>
             <a href="/dashboard">Portfolio</a>
             <a href="/shop">Shop</a>

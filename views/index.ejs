@@ -410,6 +410,48 @@
             font-weight: bold;
             color: white;
         }
+
+
+
+
+        .dropdown {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Dropdown content (hidden by default) */
+        .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        top: 50px;
+        }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+        float: none;
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+        }
+
+        /* Add a grey background color to dropdown links on hover */
+        .dropdown-content a:hover {
+        background-color: #ddd;
+        }
+
+        /* Show the dropdown menu on hover */
+        .dropdown:hover .dropdown-content {
+        display: block;
+        }
     </style>
 </head>
 <body>
@@ -420,10 +462,18 @@
             Ambitus
         </div>
         <div class="nav-links">
-            <a href="#">Markets</a>
+            <div class="dropdown">
+                <a class="dropbtn">Markets
+                    <i class="fa fa-caret-down"></i>
+                </a>
+                <div class="dropdown-content">
+                    <a href="/yesno">Yes/No Markets</a>
+                    <a href="/blind">Blind Markets</a>
+                </div>
+            </div>
             <a href="#">News</a>
-            <a href="#">Portfolio</a>
-            <a href="/shpo">Shop</a>
+            <a href="/dashboard">Portfolio</a>
+            <a href="/shop">Shop</a>
         </div>
         <div class="user-actions">
             <div class="carbon-footprint">
@@ -573,7 +623,8 @@
         
         <!-- Right Column (News) -->
 
-        <div class="right-column">
+    <div class="container">
+        <div class="sidebar">
             <div class="news-container">
                 <h3 class="news-title">
                     🌍  Climate Digest
@@ -584,9 +635,9 @@
                     <div class="news-item-date">Mar 24, 2025</div>
                 </div>
                 <div class="news-item">
-                    <div class="news-item-source">Eco Athlete</div>
-                    <div class="news-item-title">Florida's sustainability initiatives earn NCAA recognition</div>
-                    <div class="news-item-date">Mar 26, 2025</div>
+                    <div class="news-item-source">S&P Global</div>
+                    <div class="news-item-title">US House passes bills to undo Biden climate programs, ease pipe permitting</div>
+                    <div class="news-item-date">Mar 22, 2025</div>
                 </div>
                 <div class="news-item">
                     <div class="news-item-source">NVIDIA Newsroom</div>
