@@ -27,7 +27,7 @@ Many files and hours spent on VS Code. Our tech stack includes Node.js, HTML, CS
 ## Accomplishments that we're proud of
 - Nearly 20 markets
 - Implementing all of this from scratch, including all of the mathematics
-- Designing our own novel algorithm for continuous, blind prediction markets-- something no other major platform has
+- Designing our own novel algorithm for continuous, blind prediction markets-- **something no other major platform has**
 
 ## What's next for Ambitus: Climate Prediction Market
 We hope we can fuel the next era of truly data-driven, accurate, crowd-sourced decision making and research. We're planning to pitch this to investors, refine our idea, talk to connections in the academic space, and bring this to market.
