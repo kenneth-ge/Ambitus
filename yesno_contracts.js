@@ -270,14 +270,14 @@ function getYesNoBets(){
 
         let lastContract = newBet.contracts.at(-1)
         let penultimateContract = newBet.contracts.at(-2)
-        let lastYesPrice = lastContract.yesNo == 'yes' ? lastContract.price : penultimateContract.price
-        let lastNoPrice = lastContract.yesNo == 'no' ? lastContract.price : penultimateContract.price
+        let lastYesPrice = !lastContract ? "82" : (lastContract.yesNo == 'yes' ? lastContract.price : penultimateContract.price)
+        let lastNoPrice = !lastContract ? "28" : (lastContract.yesNo == 'no' ? lastContract.price : penultimateContract.price)
 
         newBet.yesprob = lastYesPrice
         newBet.noprob = lastNoPrice
 
-        newBet.yesprice = parseInt(bets[key].yesOrders.peek().price)
-        newBet.noprice = parseInt(bets[key].noOrders.peek().price)
+        newBet.yesprice = !(bets[key].yesOrders.peek()) ? 82 : parseInt(bets[key].yesOrders.peek().price)
+        newBet.noprice = !(bets[key].noOrders.peek()) ? 82 : parseInt(bets[key].noOrders.peek().price)
 
         returnBets[key] = newBet
     }

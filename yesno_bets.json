@@ -187,5 +187,16 @@
         "createdAt": "2025-03-30T02:46:07.878Z"
       }
     ]
+  },
+  "1": {
+    "title": "US Offshore Drilling Ban by Dec 2025?",
+    "tag": "policy",
+    "tagTitle": "Policy",
+    "resolveDate": 1767070800,
+    "humanReadableEndDate": "Tue, Dec 30, 2025 at 12 AM EST",
+    "verifierSource": "U.S. Congress Bills Database",
+    "contracts": [],
+    "yesOrders": [],
+    "noOrders": []
   }
 }
