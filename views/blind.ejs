@@ -270,6 +270,8 @@
 
         .histogramBox {
             background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
         }
     </style>
 <body>
@@ -372,7 +374,7 @@
 
         async function loadChart(key){
             let id = `histogramChart${key}`
-            const response = await fetch(`/blind/getdata_real?betId=${key}`);
+            const response = await fetch(`/blind/getdata?betId=${key}`);
             const data = (await response.json());
 
             // Convert to expanded dataset (repeat values by frequency)
