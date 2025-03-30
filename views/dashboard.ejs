@@ -43,12 +43,24 @@
         }
 
         .logo {
-            font-weight: 700;
-            font-size: 1.8rem;
+            font-weight: 900;
+            font-size: 2.5rem;
             color: white;
             display: flex;
             align-items: center;
             gap: 10px;
+        }
+
+        .logo a {
+            color: white;            /* Makes text white */
+            text-decoration: none;   /* Removes underline */
+            font-weight: bold;       /* Makes it stand out */
+            font-size: 27px;         /* Adjusts size */
+        }
+
+        .logo i {
+            color: white;            /* Makes icon white */
+            margin-right: 5px;       /* Adds space between icon and text */
         }
 
         .nav-links {
@@ -308,7 +320,7 @@
     <nav class="navbar">
         <div class="logo">
             <i class="fas fa-seedling"></i>
-            Ambitus
+            <a href="/">Ambitus</a>        
         </div>
         <div class="nav-links">
             <a href="#">Markets</a>
@@ -409,6 +421,55 @@
                 }
             });
         }
+
+        async function loadLineChart(key){
+            let id = `linechart${key}`
+            const response = await fetch(`/yesno/linechart?betId=${key}`);
+            const data = (await response.json()).histogram;
+ 
+            console.log(data)
+
+            // Generate time labels based on the index of the data points
+            const labels = data.map((_, index) => index + 1);  // Time t+1, t+2, t+3, ...
+
+            // Create the initial data structure for Chart.js
+            const chartData = {
+            labels: labels,  // The time labels (t+1, t+2, t+3, ...)
+            datasets: [{
+                label: 'Values over Time',
+                data,  // The actual values to plot
+                borderColor: 'rgba(75, 192, 192, 1)',
+                fill: false,
+                tension: 0.1
+            }]
+            };
+
+            // Create the chart
+            const ctx = document.getElementById(id).getContext('2d');
+            const lineChart = new Chart(ctx, {
+            type: 'line',
+            data: chartData,
+            options: {
+                scales: {
+                x: {
+                    title: {
+                    display: true,
+                    text: 'Time (t+1, t+2, ...)'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                    display: true,
+                    text: 'Value'
+                    }
+                }
+                },
+                responsive: true,
+                maintainAspectRatio: false
+            }
+            });
+            }
     </script>
 
     <div class="container">
@@ -454,6 +515,12 @@
                             <span class="outcome-label">OVERALL PROBABILITY</span>
                             <span class="probability"><%= Math.round((parseInt(yesnocards[key].yesprob) + parseInt(yesnocards[key].noprob)) / 2) %>%</span>
                         </div>
+                    </div>
+                    <div class="histogramBox">
+                        <canvas id="linechart<%=key%>"></canvas>
+                        <script>
+                            loadLineChart('<%=key%>')
+                        </script>
                     </div>
                     <div class="outcome yes">
                         <div class="outcome-header">

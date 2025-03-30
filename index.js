@@ -208,7 +208,7 @@ app.post('/yesno/addYesNoBid_Internal', (req, res) => {
 
 // Route to get the histogram of contract prices
 app.get('/yesno/linechart', (req, res) => {
-    const { betId } = req.body;
+    const { betId } = req.query;
     const histogram = getLineChart(betId);
     res.json({ histogram });
 });

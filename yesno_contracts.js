@@ -236,17 +236,17 @@ function getLineChart(betId) {
 
     // Combine prices from both yes and no queues
     // show the yes price for the line chart
-    allOrders.forEach(contract => {
+    bet.contracts.forEach(contract => {
         let price = contract.price
 
-        if(contracts.yesNo === 'no'){
+        if(contract.yesNo === 'no'){
             price = 100 - price
         }
 
         history.push(price);
     });
 
-    return histogram;
+    return history;
 }
 
 /*
