@@ -33,7 +33,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 2rem;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(50, 50, 50, 0.1);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             position: sticky;
@@ -132,7 +132,7 @@
             grid-template-columns: 1fr;
             gap: 2rem;
             align-content: start;
-}
+        }
 
         .market-title {
             font-size: 1.2rem;
@@ -166,9 +166,7 @@
 
         .market-meta {
              min-height: 40px; /* Consistent meta section height */
-
-        
-}
+        }
 
         .outcome {
             padding: 1rem;
@@ -333,6 +331,81 @@
             opacity: 1;
             visibility: visible;
         }
+
+        /* The overlay that covers the entire screen */
+        .overlay {
+            visibility: hidden;
+            display: flex; /* Initially hidden */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            z-index: 9999; /* Ensure it covers everything else */
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px); /* Apply blur effect to background */
+            opacity: 0; /* Start with invisible */
+            transform: translateY(-10%); /* Start off-screen (for fly-in from top) */
+            transition: opacity 0.25s ease, transform 0.25s ease, backdrop-filter 0.25s ease;
+        }
+
+        /* Class to show the overlay */
+        .overlay.show {
+            visibility: visible;
+            opacity: 1; /* Fade in */
+            transform: translateY(0%); /* Fly in from the top */
+        }
+
+        /* Popup box style */
+        .popup {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 800px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .bid-btn {
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: var(--gradient);
+            color: white;
+        }
+
+        .closebid-btn {
+            margin: 0.5rem;
+            width: 50%;
+        }
+
+        .line-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .line {
+            flex: 1;
+            border: 0;
+            border-top: 1px solid #000;
+        }
+
+        .or-text {
+            padding: 0 10px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -357,7 +430,7 @@
             <span class="username">Welcome, <%= user %></span>
             <a href="/logout" class="connect-btn">Sign Out</a>
         <% } else { %>
-            <a href="/login" class="connect-btn">Sign In</a>
+            <a href="/login?redirect=/yesno" class="connect-btn">Sign In</a>
         <% } %>
     </nav>
 
@@ -418,11 +491,54 @@
                 toast.classList.remove('show');
             }, 3000); // Toast disappears after 3 seconds
         }
+
+        let currentPopupKey = ''
+
+        function openDialog(key, yesprice, noprice){
+            const overlay = document.getElementById('overlay');
+            overlay.classList.add('show')
+
+            currentPopupKey = key
+            document.getElementById('yesbidprice').value = yesprice
+            document.getElementById('nobidprice').value = noprice
+        }
+
+        // Function to close the popup overlay
+        function closePopup() {
+            const overlay = document.getElementById('overlay');
+            overlay.classList.remove('show')
+        }
     </script>
 
     <!-- Toast container (hidden by default) -->
     <div id="toast" class="toast">
         
+    </div>
+
+    <!-- The overlay container -->
+    <div id="overlay" class="overlay">
+        <div class="popup">
+            <h2>Submit Bid Limit Order</h2>
+            <div class="outcomes">
+                <div class="outcome yes">
+                    <div class="outcome-header">
+                        <span class="outcome-label">YES</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Price Per Contract (Cents)" id="yesbidprice">
+                    <input type="number" class="bet-input" placeholder="Number of Contracts" id="yesbidlimitorder">
+                    <button class="bet-btn" onclick="purchase(currentPopupKey, 'yes', document.getElementById('yesbidprice').value, 'yesbidlimitorder')">Buy YES</button>
+                </div>
+                <div class="outcome no">
+                    <div class="outcome-header">
+                        <span class="outcome-label">NO</span>
+                    </div>
+                    <input type="number" class="bet-input" placeholder="Price Per Contract (Cents)" id="nobidprice">
+                    <input type="number" class="bet-input" placeholder="Number of Contracts" id="nobidlimitorder">
+                    <button class="bet-btn" onclick="purchase(currentPopupKey, 'no', document.getElementById('nobidprice').value, 'nobidlimitorder')">Buy NO</button>
+                </div>
+            </div>
+            <button class="bid-btn closebid-btn" onclick="closePopup()">Close</button>
+        </div>
     </div>
 
     <!-- Main Content -->
@@ -453,6 +569,12 @@
                     </div>
                 </div>
                 <div class="verification" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
+                    <div class="line-container">
+                        <hr class="line">
+                        <span class="or-text">OR</span>
+                        <hr class="line">
+                    </div>
+                    <button class="bid-btn" onclick="openDialog('<%= key%>', <%= cards[key].yesprice %>, <%= cards[key].noprice %>)">Submit Bid Order</button>
                     Source: UNEP Progress Report
                 </div>
             </div>

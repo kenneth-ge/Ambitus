@@ -82,10 +82,12 @@ app.get('/', (req, res) => {
 })
 
 app.get('/login', (req, res) => {
+    const redirectUrl = req.query.redirect || '/dashboard'; // Default to '/dashboard' if no redirect param
+
     if (req.session.username) {
-        return res.redirect('/dashboard'); // Redirect if already logged in
+        return res.redirect(redirectUrl); // Redirect if already logged in
     }
-    res.render('login');
+    res.render('login', { redirectUrl });
 });
 
 // Handle login (set session)
