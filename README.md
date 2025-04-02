@@ -4,6 +4,10 @@ A novel climate prediction market. Get paid to bet, while fueling trustworthy da
 
 ![Screenshot From 2025-03-30 07-10-55](https://github.com/user-attachments/assets/1504a00b-2a6a-4005-85e5-3bbe2428c06e)
 
+## Demo Vid
+
+[![Watch the video](https://github.com/user-attachments/assets/42433492-39af-4179-819b-0d1b18277933)](https://youtu.be/jfQ9kjLFj8k?si=pUC2CIH-JUB8TA2K)
+
 ## Inspiration
 
 After cheering on platforms like Kalshi and Polymarket, obsessing over  "idea futures" and observing how living ecosystems continue to overcome material barriers to flourishing, Kenny and I knew that we couldn't leave PrincetonHacks without building a "crystal ball" for understanding the future of our natural world. 
