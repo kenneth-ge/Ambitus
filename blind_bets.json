@@ -1,248 +1,111 @@
 {
   "0": {
-    "title": "How many named storms will the 2025 Atlantic Hurricane Season produce?",
-    "tag": "weather",
-    "resolveDate": 1764478800,
-    "verifierSource": "NOAA Seasonal Outlook",
+    "title": "What will be the average number of citations for papers published in Nature Climate Change in 2025?",
+    "tag": "impact-assessment",
+    "resolveDate": 1767243600,
+    "verifierSource": "Web of Science",
     "range": [
       0,
       100
     ],
-    "contracts": [
-      {
-        "userId": "kenny",
-        "price": null,
-        "numContracts": 1,
-        "guessValue": 10,
-        "betId": "0",
-        "createdAt": "2025-03-30T09:06:27.263Z"
-      },
-      {
-        "userId": "kenny",
-        "price": null,
-        "numContracts": 4,
-        "guessValue": 11,
-        "betId": "0",
-        "createdAt": "2025-03-30T09:06:51.890Z"
-      },
-      {
-        "userId": "kenny",
-        "price": null,
-        "numContracts": 15,
-        "guessValue": 12,
-        "betId": "0",
-        "createdAt": "2025-03-30T09:06:56.842Z"
-      },
-      {
-        "userId": "kenny",
-        "price": null,
-        "numContracts": 74,
-        "guessValue": 13,
-        "betId": "0",
-        "createdAt": "2025-03-30T09:07:00.529Z"
-      },
-      {
-        "userId": "kenny",
-        "price": null,
-        "numContracts": 149,
-        "guessValue": 14,
-        "betId": "0",
-        "createdAt": "2025-03-30T09:07:07.514Z"
-      },
-      {
-        "userId": "kenny",
-        "price": null,
-        "numContracts": 225,
-        "guessValue": 15,
-        "betId": "0",
-        "createdAt": "2025-03-30T09:07:12.992Z"
-      },
-      {
-        "userId": "kenny",
-        "price": null,
-        "numContracts": 275,
-        "guessValue": 16,
-        "betId": "0",
-        "createdAt": "2025-03-30T09:07:18.399Z"
-      },
-      {
-        "userId": "kenny",
-        "price": null,
-        "numContracts": 92,
-        "guessValue": 18,
-        "betId": "0",
-        "createdAt": "2025-03-30T09:07:27.867Z"
-      },
-      {
-        "userId": "kenny",
-        "price": null,
-        "numContracts": 22,
-        "guessValue": 19,
-        "betId": "0",
-        "createdAt": "2025-03-30T09:07:32.725Z"
-      },
-      {
-        "userId": "kenny",
-        "price": null,
-        "numContracts": 3,
-        "guessValue": 20,
-        "betId": "0",
-        "createdAt": "2025-03-30T09:07:36.163Z"
-      },
-      {
-        "userId": "kenny",
-        "price": null,
-        "numContracts": 149,
-        "guessValue": 17,
-        "betId": "0",
-        "createdAt": "2025-03-30T09:12:10.828Z"
-      },
-      {
-        "userId": "anha",
-        "price": null,
-        "numContracts": "4",
-        "guessValue": "73",
-        "betId": "0",
-        "createdAt": "2025-03-30T15:22:03.777Z"
-      },
-      {
-        "userId": "anha",
-        "price": null,
-        "numContracts": "5",
-        "guessValue": "38",
-        "betId": "0",
-        "createdAt": "2025-03-30T15:40:23.183Z"
-      },
-      {
-        "userId": "anha",
-        "price": null,
-        "numContracts": "3",
-        "guessValue": "72",
-        "betId": "0",
-        "createdAt": "2025-03-30T16:08:35.847Z"
-      },
-      {
-        "userId": "anha",
-        "price": null,
-        "numContracts": "40",
-        "guessValue": "74",
-        "betId": "0",
-        "createdAt": "2025-03-30T16:37:27.822Z"
-      }
-    ]
+    "contracts": []
   },
   "1": {
-    "title": "How many catastrophic fire danger days will Australia experience in 2025?",
-    "tag": "weather",
+    "title": "What percentage of AI research papers will be published as preprints in 2025?",
+    "tag": "academic-consensus",
     "resolveDate": 1767243600,
-    "verifierSource": "Australia Bureau of Meteorology",
-    "range": [
-      0,
-      365
-    ],
-    "contracts": [
-      {
-        "userId": "kenny",
-        "price": null,
-        "numContracts": "50",
-        "guessValue": "53",
-        "betId": "1",
-        "createdAt": "2025-03-30T08:58:02.393Z"
-      },
-      {
-        "userId": "anha",
-        "price": null,
-        "numContracts": "1",
-        "guessValue": "265",
-        "betId": "1",
-        "createdAt": "2025-03-30T15:25:21.723Z"
-      },
-      {
-        "userId": "anha",
-        "price": null,
-        "numContracts": "1",
-        "guessValue": "216",
-        "betId": "1",
-        "createdAt": "2025-03-30T15:25:46.227Z"
-      }
-    ]
-  },
-  "2": {
-    "title": "What % of global coral reefs will experience severe bleaching in 2025?",
-    "tag": "ecological",
-    "resolveDate": 1767243600,
-    "verifierSource": "NOAA Coral Reef Watch",
+    "verifierSource": "arXiv Statistics",
     "range": [
       0,
       100
     ],
-    "contracts": [
-      {
-        "userId": "kenny",
-        "price": null,
-        "numContracts": "100",
-        "guessValue": "73",
-        "betId": "2",
-        "createdAt": "2025-03-30T09:13:57.733Z"
-      },
-      {
-        "userId": "kenny",
-        "price": null,
-        "numContracts": "100",
-        "guessValue": "25",
-        "betId": "2",
-        "createdAt": "2025-03-30T09:14:01.494Z"
-      },
-      {
-        "userId": "kenny",
-        "price": null,
-        "numContracts": "3",
-        "guessValue": "52",
-        "betId": "2",
-        "createdAt": "2025-03-30T09:14:14.317Z"
-      },
-      {
-        "userId": "kenny",
-        "price": null,
-        "numContracts": "3",
-        "guessValue": "55",
-        "betId": "2",
-        "createdAt": "2025-03-30T09:14:22.103Z"
-      },
-      {
-        "userId": "kenny",
-        "price": null,
-        "numContracts": "3",
-        "guessValue": "57",
-        "betId": "2",
-        "createdAt": "2025-03-30T09:14:24.875Z"
-      },
-      {
-        "userId": "kenny",
-        "price": null,
-        "numContracts": "3",
-        "guessValue": "49",
-        "betId": "2",
-        "createdAt": "2025-03-30T09:14:29.477Z"
-      },
-      {
-        "userId": "kenny",
-        "price": null,
-        "numContracts": "3",
-        "guessValue": "46",
-        "betId": "2",
-        "createdAt": "2025-03-30T09:14:35.325Z"
-      }
-    ]
+    "contracts": []
   },
-  "3": {
-    "title": "How many Hydrogen fuel cell vehicles will be sold globally between January and June 2025?",
-    "tag": "tech",
-    "resolveDate": 1748750400,
-    "verifierSource": "UNEP Progress Report",
+  "2": {
+    "title": "How many clinical trials will be registered on ClinicalTrials.gov in 2025?",
+    "tag": "study-effectiveness",
+    "resolveDate": 1767243600,
+    "verifierSource": "ClinicalTrials.gov",
     "range": [
       1000,
-      50000
+      100000
+    ],
+    "contracts": []
+  },
+  "3": {
+    "title": "What will be the average impact factor of journals publishing climate change research in 2025?",
+    "tag": "research-validation",
+    "resolveDate": 1767243600,
+    "verifierSource": "Journal Citation Reports",
+    "range": [
+      0,
+      50
+    ],
+    "contracts": []
+  },
+  "4": {
+    "title": "How many papers will be retracted from top scientific journals in 2025?",
+    "tag": "research-validation",
+    "resolveDate": 1767243600,
+    "verifierSource": "Retraction Watch",
+    "range": [
+      0,
+      1000
+    ],
+    "contracts": []
+  },
+  "5": {
+    "title": "What percentage of published psychology studies will be successfully replicated in 2025?",
+    "tag": "study-effectiveness",
+    "resolveDate": 1767243600,
+    "verifierSource": "Open Science Framework",
+    "range": [
+      0,
+      100
+    ],
+    "contracts": []
+  },
+  "6": {
+    "title": "How many new AI research labs will be established by major tech companies in 2025?",
+    "tag": "academic-consensus",
+    "resolveDate": 1767243600,
+    "verifierSource": "Tech Company Announcements",
+    "range": [
+      0,
+      50
+    ],
+    "contracts": []
+  },
+  "7": {
+    "title": "What will be the average number of authors per paper in Nature in 2025?",
+    "tag": "research-validation",
+    "resolveDate": 1767243600,
+    "verifierSource": "Nature Statistics",
+    "range": [
+      1,
+      100
+    ],
+    "contracts": []
+  },
+  "8": {
+    "title": "How many new scientific journals will be launched in 2025?",
+    "tag": "research-validation",
+    "resolveDate": 1767243600,
+    "verifierSource": "Directory of Open Access Journals",
+    "range": [
+      0,
+      1000
+    ],
+    "contracts": []
+  },
+  "9": {
+    "title": "What percentage of published medical research will be open access in 2025?",
+    "tag": "study-effectiveness",
+    "resolveDate": 1767243600,
+    "verifierSource": "Directory of Open Access Journals",
+    "range": [
+      0,
+      100
     ],
     "contracts": []
   }

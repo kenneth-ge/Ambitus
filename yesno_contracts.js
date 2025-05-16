@@ -112,114 +112,156 @@ function addBet(betId, title, tag, tagTitle, resolveDate, verifierSource) {
         verifierSource,
         yesOrders: new Heap((a, b) => a.price - b.price),  // Min-heap for Yes orders
         noOrders: new Heap((a, b) => b.price - a.price),   // Max-heap for No orders
-        contracts: []
+        contracts: [],
+        pendingSave: false  // Flag to track if this bet needs saving
     };
-    saveData();
 }
 
-// Add a contract to a bet
-function addBid(userId, betId, price, yesNo) {
-    // Check if the user exists
-    if (!users[userId]) {
-        console.log('User not found')
-        return {
-            success: false,
-            reason: 'User not found'
+// Batch process multiple bids at once
+function addBids(bids) {
+    const results = [];
+    const betsToMatch = new Set();
+    
+    for (const bid of bids) {
+        const { userId, betId, price, yesNo } = bid;
+        
+        // Check if the user exists
+        if (!users[userId]) {
+            results.push({
+                success: false,
+                reason: 'User not found'
+            });
+            continue;
+        }
+
+        // Check if the bet exists
+        if (!bets[betId]) {
+            results.push({
+                success: false,
+                reason: 'Bet not found'
+            });
+            continue;
+        }
+
+        const user = users[userId];
+        const bet = bets[betId];
+
+        // Ensure the user has enough balance
+        if (user.balance < price) {
+            results.push({
+                success: false,
+                reason: 'Insufficient balance'
+            });
+            continue;
+        }
+
+        // Create the contract
+        const contract = { userId, price, yesNo, betId, createdAt: new Date() };
+
+        // Add the contract to the user's list of bids
+        user.bids.push(contract);
+
+        // Add the contract to the appropriate queue
+        if (yesNo === 'yes') {
+            bet.yesOrders.push(contract);
+        } else {
+            bet.noOrders.push(contract);
+        }
+
+        bet.pendingSave = true;
+        betsToMatch.add(betId);
+        results.push({ success: true });
+    }
+
+    // Match orders for all affected bets
+    for (const betId of betsToMatch) {
+        matchOrders(betId);
+    }
+
+    // Only save if there were any successful operations
+    if (results.some(r => r.success)) {
+        saveData();
+    }
+
+    return results;
+}
+
+// Match orders for a bet - optimized version
+function matchOrders(betId) {
+    const bet = bets[betId];
+    if (!bet) return;
+
+    const matches = [];
+    const yesOrders = [];
+    const noOrders = [];
+
+    // Collect all possible matches first
+    while (bet.yesOrders.size() > 0 && bet.noOrders.size() > 0) {
+        const bestYes = bet.yesOrders.peek();
+        const bestNo = bet.noOrders.peek();
+
+        if (parseInt(bestYes.price) + parseInt(bestNo.price) >= 100) {
+            matches.push({ yes: bestYes, no: bestNo });
+            yesOrders.push(bet.yesOrders.pop());
+            noOrders.push(bet.noOrders.pop());
+        } else {
+            break;
         }
     }
 
-    // Check if the bet exists
-    if (!bets[betId]) {
-        console.log('Bet not found')
-        return {
-            success: false,
-            reason: 'Bet not found'
-        };
-    }
+    // Process all matches in batch
+    for (const match of matches) {
+        const { yes, no } = match;
+        
+        // Update user balances
+        users[yes.userId].balance -= yes.price;
+        users[no.userId].balance -= no.price;
 
-    const user = users[userId];
-    const bet = bets[betId];
+        // Update user contracts
+        users[yes.userId].bids = users[yes.userId].bids.filter(item => item !== yes);
+        users[no.userId].bids = users[no.userId].bids.filter(item => item !== no);
 
-    // Ensure the user has enough balance
-    if (user.balance < price) {
-        console.log('Insufficient balance');
-        return {
-            success: false,
-            reason: 'Insufficient balance'
-        };
-    }
+        users[yes.userId].boughtContracts.push(yes);
+        users[no.userId].boughtContracts.push(no);
 
-    // Create the contract
-    const contract = { userId, price, yesNo, betId, createdAt: new Date() };
-
-    // Add the contract to the user's list of bids
-    user.bids.push(contract);
-
-    // console.log(Object.getPrototypeOf(bet.yesOrders))
-    // console.log(Object.getPrototypeOf(bet.noOrders))
-    // console.log(Object.getPrototypeOf(new Heap()))
-
-    // Add the contract to the appropriate queue based on whether it's 'yes' or 'no'
-    if (yesNo === 'yes') {
-        bet.yesOrders.push(contract);  // Add to yes queue
-    } else {
-        bet.noOrders.push(contract);   // Add to no queue
-    }
-
-    console.log('add bet orders and stuff')
-    console.log(bet.yesOrders, bet.noOrders)
-
-    // match orders if possible
-    matchOrders(betId)
-
-    // Save data
-    saveData();
-
-    console.log('Success!')
-    return {
-        success: true
+        // Add to completed contracts
+        bet.contracts.push(yes, no);
     }
 }
 
-// Match orders for a bet
-function matchOrders(betId) {
-    const bet = bets[betId];
+// Debounced save function to prevent too frequent writes
+let saveTimeout = null;
+function debouncedSave() {
+    if (saveTimeout) {
+        clearTimeout(saveTimeout);
+    }
+    saveTimeout = setTimeout(() => {
+        saveData();
+    }, 1000); // Save after 1 second of inactivity
+}
 
-    if (!bet) {
-        console.log('Bet not found');
-        return;
+// Modified saveData to only save changed bets
+function saveData() {
+    let serialized = {};
+    let hasChanges = false;
+    
+    for (let key in bets) {
+        if (bets[key].pendingSave) {
+            let oldBet = bets[key];
+            let newBet = cloneBet(oldBet);
+            serialized[key] = newBet;
+            bets[key].pendingSave = false;
+            hasChanges = true;
+        }
     }
 
-    while (bet.yesOrders.size() > 0 && bet.noOrders.size() > 0) {
-        const bestYes = bet.yesOrders.peek();  // Get the best (lowest) yes price
-        const bestNo = bet.noOrders.peek();   // Get the best (highest) no price
-
-        // If the best yes price and the bet no price add up to >= 1, a match is possible
-        if (parseInt(bestYes.price) + parseInt(bestNo.price) >= 100) {
-            // Perform transaction logic here, such as updating user balances or removing matched orders
-            console.log('Matching Orders for Bet:', bestYes, bestNo);
-            console.log('total price sum:', parseInt(bestYes.price), parseInt(bestNo.price))
-
-            // Deduct the amount from the user's balance
-            users[bestYes.userId].balance -= bestYes.price;
-            users[bestNo.userId].balance -= bestNo.price;
-
-            // Move from user's bids to user's bought contracts
-            users[bestYes.userId].bids = users[bestYes.userId].bids.filter(item => item !== bestYes);
-            users[bestNo.userId].bids = users[bestNo.userId].bids.filter(item => item !== bestNo);
-
-            users[bestYes.userId].boughtContracts.push(bestYes)
-            users[bestNo.userId].boughtContracts.push(bestNo)
-
-            // add the contracts to the list of completed  bets
-            bets[betId].contracts.push(bestYes)
-            bets[betId].contracts.push(bestNo)
-
-            // Remove matched orders from the queues
-            bet.yesOrders.pop();
-            bet.noOrders.pop();
-        } else {
-            break;  // No more possible matches
+    if (hasChanges) {
+        try {
+            const dataToWrite = JSON.stringify(serialized, null, 2);
+            fs.writeFileSync(betsFilePath, dataToWrite, 'utf8');
+            saveUserData();
+        } catch (err) {
+            console.error('Error saving data to file:', err);
         }
     }
 }
@@ -270,8 +312,20 @@ function getYesNoBets(){
 
         let lastContract = newBet.contracts.at(-1)
         let penultimateContract = newBet.contracts.at(-2)
-        let lastYesPrice = !lastContract ? "82" : (lastContract.yesNo == 'yes' ? lastContract.price : penultimateContract.price)
-        let lastNoPrice = !lastContract ? "28" : (lastContract.yesNo == 'no' ? lastContract.price : penultimateContract.price)
+        
+        // Default values if no contracts exist
+        let lastYesPrice = "82"
+        let lastNoPrice = "28"
+        
+        if (lastContract) {
+            if (lastContract.yesNo === 'yes') {
+                lastYesPrice = lastContract.price
+                lastNoPrice = penultimateContract ? penultimateContract.price : "28"
+            } else {
+                lastNoPrice = lastContract.price
+                lastYesPrice = penultimateContract ? penultimateContract.price : "82"
+            }
+        }
 
         newBet.yesprob = lastYesPrice
         newBet.noprob = lastNoPrice
@@ -290,7 +344,7 @@ loadData();
 
 module.exports = {
     addBet,
-    addBid,
+    addBids,  // New batch processing function
     matchOrders,
     getLineChart,
     saveData,

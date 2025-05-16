@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ambitus | Climate Markets</title>
+    <title>Ambitus | Blind Markets</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -366,12 +367,11 @@
 
     <div class="category-filters">
         <button class="filter-btn active" data-category="all">All</button>
-        <button class="filter-btn" data-category="agreements">Agreements</button>
-        <button class="filter-btn" data-category="policy">Policy</button>
-        <button class="filter-btn" data-category="corporate">Corporate</button>
-        <button class="filter-btn" data-category="environment">Environment</button>
-        <button class="filter-btn" data-category="technology">Tech</button>
-        <button class="filter-btn" data-category="financial">Financial</button>
+        <button class="filter-btn" data-category="micro-polls">Micro Polls</button>
+        <button class="filter-btn" data-category="academic-consensus">Academic Consensus</button>
+        <button class="filter-btn" data-category="impact-assessment">Impact Assessment</button>
+        <button class="filter-btn" data-category="study-effectiveness">Study Effectiveness</button>
+        <button class="filter-btn" data-category="research-validation">Research Validation</button>
     </div>
 
     <script>
@@ -399,6 +399,31 @@
                 toast('Bid failed due to reason: ' + data.reason);
             }
         }
+
+        // Add filter functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const marketCards = document.querySelectorAll('.market-card');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+
+                    const selectedCategory = this.getAttribute('data-category');
+
+                    marketCards.forEach(card => {
+                        if (selectedCategory === 'all' || card.getAttribute('data-category') === selectedCategory) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
 
         // Function to show the toast
         function toast(text) {

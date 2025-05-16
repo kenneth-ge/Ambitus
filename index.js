@@ -2,11 +2,11 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 const app = express();
-const port = 3000;
+const port = 5000;
 
 const {
     addBet,
-    addBid: addYesNoBid,
+    addBids: addYesNoBid,
     matchOrders,
     getLineChart,
     saveData: saveYesNoData,
@@ -49,7 +49,10 @@ app.use(session({
     secret: 'your-secret-key', // Secret key for signing the session ID
     resave: false,  // Don't resave the session if it wasn't modified
     saveUninitialized: true,  // Save an uninitialized session
-    cookie: { secure: false }  // Set to true if using HTTPS
+    cookie: { secure: false },  // Set to true if using HTTPS
+    genid: function(req) {
+        return Date.now().toString(36) + Math.random().toString(36).substr(2);
+    }
 }));
 
 // Fake authentication middleware
@@ -88,7 +91,8 @@ app.use(fakeAuthMiddleware);
 // Routes
 app.get('/', (req, res) => {
     res.render('index', {
-        user: req.session.username
+        user: req.session.username,
+        cards: getYesNoBets()
     })
 })
 
@@ -186,13 +190,27 @@ app.post('/yesno/addYesNoBid', (req, res) => {
         return res.status(400).json({ reason: 'Missing or invalid data' });
     }
 
-    for(let i = 0; i < number; i++){
-        let result = addYesNoBid(req.session.username, betId, price, yesNo);
+    // Create an array of bids to process in batch
+    const bids = Array(number).fill().map(() => ({
+        userId: req.session.username,
+        betId,
+        price,
+        yesNo
+    }));
 
-        if(!result.success)
-            res.status(500, result)
+    const results = addYesNoBid(bids);
+    
+    // Check if any bids failed
+    const failedBids = results.filter(result => !result.success);
+    if (failedBids.length > 0) {
+        return res.status(500).json({
+            success: false,
+            failedBids,
+            reason: failedBids[0].reason // Return the first error reason
+        });
     }
-    res.status(201).json({success: true});
+
+    res.status(201).json({ success: true });
 });
 
 // Route to add a new contract (internal only for testing)
@@ -203,8 +221,15 @@ app.post('/yesno/addYesNoBid_Internal', (req, res) => {
         return res.status(400).json({ message: 'Missing or invalid data' });
     }
 
-    let result = addYesNoBid(userId, betId, price, yesNo);
-    res.status(201).json(result);
+    const bids = [{
+        userId,
+        betId,
+        price,
+        yesNo
+    }];
+
+    const results = addYesNoBid(bids);
+    res.status(201).json(results[0]); // Return the first (and only) result
 });
 
 // Route to get the histogram of contract prices

@@ -9,13 +9,18 @@
   "license": "ISC",
   "description": "",
   "nodemonConfig": {
-    "ignore": ["*.json", "public/*.js"]
+    "ignore": [
+      "*.json",
+      "public/*.js"
+    ]
   },
   "dependencies": {
     "ejs": "^3.1.10",
     "express": "^4.21.2",
     "express-session": "^1.18.1",
     "heap-js": "^2.6.0",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "random-bytes": "^1.0.0",
+    "uid-safe": "^2.1.5"
   }
 }

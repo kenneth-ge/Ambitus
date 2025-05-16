@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ambitus | Sustainable Markets</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -501,174 +502,108 @@
         <!-- Left Column -->
         <div class="left-column">
             <!-- Market Header -->
-        
-            <div class="market-card">
-                <h2 class="market-title">Will climate tech venture capital investments exceed $85bn in 2025?</h1>
-                <div class="market-meta">
-                    <span class="market-type">Financials</span>
-                    <span><i class="far fa-clock"></i> Closes: January, 2026</span>
-                </div>
-                
-                <div class="outcomes">
-                    <div class="outcome yes">
-                        <div class="outcome-label">YES</div>
-                        <div class="outcome-price">$0.88</div>
-                        <div class="outcome-percent">88% probability</div>
-                        <input type="number" class="bet-input" placeholder="Enter amount ($)">
-                        <button class="bet-btn">Buy YES</button>
-                    </div>
-                    <div class="outcome no">
-                        <div class="outcome-label">NO</div>
-                        <div class="outcome-price">$0.12</div>
-                        <div class="outcome-percent">12% probability</div>
-                        <input type="number" class="bet-input" placeholder="Enter amount ($)">
-                        <button class="bet-btn">Buy NO</button>
-                    </div>
-                </div>
-                <div class="verification" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
-                    Source: Pitchbook / CB Insights 
-                </div>
-            </div>
-    
-            <div class="market-card">
-                <h2 class="market-title">Will India's renewable energy capacity surpass 200 GW by June 2025?</h2>
-                <div class="market-meta">
-                    <span class="market-type">Technology</span>
-                    <span><i class="far fa-clock"></i> Closes: June 2025</span>
-                </div>
-
-                <div class="outcomes">
-                    <div class="outcome yes">
-                        <div class="outcome-label">YES</div>
-                        <div class="outcome-price">$0.45</div>
-                        <div class="outcome-percent">45% probability</div>
-                        <input type="number" class="bet-input" placeholder="Enter amount ($)">
-                        <button class="bet-btn">Buy YES</button>
-                    </div>
-                    <div class="outcome no">
-                        <div class="outcome-label">NO</div>
-                        <div class="outcome-price">$0.55</div>
-                        <div class="outcome-percent">55% probability</div>
-                        <input type="number" class="bet-input" placeholder="Enter amount ($)">
-                        <button class="bet-btn">Buy NO</button>
-                    </div>
-                </div>
-                <div class="verification" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
-                    Source: Indian Ministry of Power 
-                </div>
-            </div>
-
-
-            <div class="market-card">
-                <h2 class="market-title">Will >30% of global coral reefs experience severe bleaching in 2025?</h2>
-                <div class="market-meta">
-                    <span class="market-type">Ecological</span>
-                    <span><i class="far fa-clock"></i> Closes: January 2025</span>
-                </div>
-
-                <div class="outcomes">
-                    <div class="outcome yes">
-                        <div class="outcome-label">YES</div>
-                        <div class="outcome-price">$0.70</div>
-                        <div class="outcome-percent">70% probability</div>
-                        <input type="number" class="bet-input" placeholder="Enter amount ($)">
-                        <button class="bet-btn">Buy YES</button>
-                    </div>
-                    <div class="outcome no">
-                        <div class="outcome-label">NO</div>
-                        <div class="outcome-price">$0.30</div>
-                        <div class="outcome-percent">30% probability</div>
-                        <input type="number" class="bet-input" placeholder="Enter amount ($)">
-                        <button class="bet-btn">Buy NO</button>
-                    </div>
-                </div>
-                <div class="verification" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
-                    Source: NOAA Coral Reef Watch
-                </div>
-            </div>
+            <% 
+            // Get a few interesting questions from yesno_bets.json
+            const interestingQuestions = [
+                "13", // Global Methane Pledge
+                "16", // Arctic sea ice
+                "21"  // Hottest year record
+            ];
             
-            <!-- Price Chart 
-            <div class="chart-container">
-                <div class="chart-placeholder">
-                    <i class="fas fa-chart-line"></i> Duke Championship Probability Trend
+            interestingQuestions.forEach(key => {
+                const market = cards[key];
+                if (market) {
+            %>
+                <div class="market-card">
+                    <h2 class="market-title"><%= market.title %></h2>
+                    <div class="market-meta">
+                        <span class="market-type"><%= market.tagTitle %></span>
+                        <span><i class="far fa-clock"></i> Closes: <%= market.humanReadableEndDate %></span>
+                    </div>
+                    
+                    <div class="outcomes">
+                        <div class="outcome yes">
+                            <div class="outcome-label">YES</div>
+                            <div class="outcome-price">$0.<%= market.yesprice || '50' %></div>
+                            <div class="outcome-percent"><%= market.yesprob || '50' %>% probability</div>
+                            <input type="number" class="bet-input" placeholder="Enter amount ($)" id="numyes<%= key%>">
+                            <button class="bet-btn" onclick="purchase('<%= key%>', 'yes', <%= market.yesprice || '50' %>, 'numyes<%= key%>')">Buy YES</button>
+                        </div>
+                        <div class="outcome no">
+                            <div class="outcome-label">NO</div>
+                            <div class="outcome-price">$0.<%= market.noprice || '50' %></div>
+                            <div class="outcome-percent"><%= market.noprob || '50' %>% probability</div>
+                            <input type="number" class="bet-input" placeholder="Enter amount ($)" id="numno<%= key%>">
+                            <button class="bet-btn" onclick="purchase('<%= key%>', 'no', <%= market.noprice || '50' %>, 'numno<%= key%>')">Buy NO</button>
+                        </div>
+                    </div>
+                    <div class="verification" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
+                        Source: <%= market.verifierSource %>
+                    </div>
                 </div>
-            </div> -->
-            
-            <!-- Positions Table 
-            <div class="positions-container">
-                <h3 class="positions-title">
-                    <i class="fas fa-chart-pie"></i> Your Positions
-                </h3>
-                <table class="positions-table">
-                    <thead>
-                        <tr>
-                            <th>Market</th>
-                            <th>Position</th>
-                            <th>Amount</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Duke wins</td>
-                            <td class="position-yes">YES</td>
-                            <td>$150.00</td>
-                            <td>Mar 28, 2025</td>
-                        </tr>
-                        <tr>
-                            <td>Florida wins</td>
-                            <td class="position-no">NO</td>
-                            <td>$75.00</td>
-                            <td>Mar 25, 2025</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <% 
+                }
+            }); 
+            %>
         </div>
         
         <!-- Right Column (News) -->
-    </div>
-    <div class="innercontainer">
-        <div class="sidebar">
-            <div class="news-container">
-                <h3 class="news-title">
-                    🌍  Climate Digest
-                </h3>
-                <div class="news-item">
-                    <div class="news-item-source">Inside Climate News</div>
-                    <div class="news-item-title">NOAA Issues Critical Drought Warnings in Its Spring Climate Outlook</div>
-                    <div class="news-item-date">Mar 24, 2025</div>
-                </div>
-                <div class="news-item">
-                    <div class="news-item-source">S&P Global</div>
-                    <div class="news-item-title">US House passes bills to undo Biden climate programs, ease pipe permitting</div>
-                    <div class="news-item-date">Mar 22, 2025</div>
-                </div>
-                <div class="news-item">
-                    <div class="news-item-source">NVIDIA Newsroom</div>
-                    <div class="news-item-title">Climate Tech Companies Adopt NVIDIA Earth-2 for High-Resolution, Energy-Efficient, More Accurate Weather Predictions and Disaster Preparedness</div>
-                    <div class="news-item-date">Mar 18, 2025</div>
-                </div>
+        <div class="news-container">
+            <h3 class="news-title">
+                🌍  Climate Digest
+            </h3>
+            <div class="news-item">
+                <div class="news-item-source">Inside Climate News</div>
+                <div class="news-item-title">NOAA Issues Critical Drought Warnings in Its Spring Climate Outlook</div>
+                <div class="news-item-date">Mar 24, 2025</div>
+            </div>
+            <div class="news-item">
+                <div class="news-item-source">S&P Global</div>
+                <div class="news-item-title">US House passes bills to undo Biden climate programs, ease pipe permitting</div>
+                <div class="news-item-date">Mar 22, 2025</div>
+            </div>
+            <div class="news-item">
+                <div class="news-item-source">NVIDIA Newsroom</div>
+                <div class="news-item-title">Climate Tech Companies Adopt NVIDIA Earth-2 for High-Resolution, Energy-Efficient, More Accurate Weather Predictions and Disaster Preparedness</div>
+                <div class="news-item-date">Mar 18, 2025</div>
             </div>
         </div>
     </div>
 
     <script>
-        // Interactive functionality
-        document.querySelectorAll('.bet-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const amount = this.previousElementSibling.value;
-                const outcome = this.closest('.outcome').classList.contains('yes') ? 'YES' : 'NO';
-                const market = this.closest('.market-card').querySelector('.market-title').textContent;
-                
-                if (!amount || isNaN(amount) || amount <= 0) {
-                    alert('Please enter a valid amount');
-                    return;
+        function purchase(key, yesNo, price, numberFieldId) {
+            const amount = document.getElementById(numberFieldId).value;
+            if (!amount || isNaN(amount) || amount <= 0) {
+                alert('Please enter a valid amount');
+                return;
+            }
+
+            // Make the fetch request
+            fetch('/yesno/addYesNoBid', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    betId: key,
+                    yesNo: yesNo,
+                    price: price,
+                    number: amount
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    alert('Bid submitted successfully!');
+                } else {
+                    alert('Bid failed: ' + data.reason);
                 }
-                
-                alert(`Placed $${amount} ${outcome} bet on:\n"${market}"\n\n2% of this trade will fund reforestation projects.`);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while submitting your bid');
             });
-        });
+        }
         
         document.querySelector('.connect-btn').addEventListener('click', function() {
             alert('Ambitus connects with sustainable crypto wallets\n\nWe offset all transaction emissions through verified carbon credits.');
