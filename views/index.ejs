@@ -503,11 +503,12 @@
         <div class="left-column">
             <!-- Market Header -->
             <% 
-            // Get a few interesting questions from yesno_bets.json
+            // Get interesting research-focused questions from yesno_bets.json
             const interestingQuestions = [
-                "13", // Global Methane Pledge
-                "16", // Arctic sea ice
-                "21"  // Hottest year record
+                "5",  // AI-assisted diagnosis meta-analysis
+                "9",  // Carbon capture technologies study
+                "10", // Climate adaptation measures review
+                "12"  // Climate models meta-analysis
             ];
             
             interestingQuestions.forEach(key => {
@@ -517,7 +518,7 @@
                 <div class="market-card">
                     <h2 class="market-title"><%= market.title %></h2>
                     <div class="market-meta">
-                        <span class="market-type"><%= market.tagTitle %></span>
+                        <span class="market-type"><i class="fas fa-flask"></i> <%= market.tagTitle %></span>
                         <span><i class="far fa-clock"></i> Closes: <%= market.humanReadableEndDate %></span>
                     </div>
                     
@@ -538,7 +539,7 @@
                         </div>
                     </div>
                     <div class="verification" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
-                        Source: <%= market.verifierSource %>
+                        <i class="fas fa-check-circle"></i> Source: <%= market.verifierSource %>
                     </div>
                 </div>
             <% 
